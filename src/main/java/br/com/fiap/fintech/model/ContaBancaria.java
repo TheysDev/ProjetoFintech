@@ -3,15 +3,15 @@ package br.com.fiap.fintech.model;
 public class ContaBancaria {
 
     private int idConta;
-    private int numeroConta;
-    private int agencia;
+    private String numeroConta;
+    private String agencia;
     private double saldo;
     private String status;
 
     private Banco banco;
     private Usuario usuario;
 
-    public ContaBancaria(int idConta, int numeroConta, int agencia, double saldo, Banco banco, Usuario usuario) {
+    public ContaBancaria(int idConta, String numeroConta, String agencia, double saldo, Banco banco, Usuario usuario) {
         this.idConta = idConta;
         this.numeroConta = numeroConta;
         this.agencia = agencia;
@@ -30,19 +30,19 @@ public class ContaBancaria {
         this.idConta = idConta;
     }
 
-    public int getNumeroConta() {
+    public String getNumeroConta() {
         return numeroConta;
     }
 
-    public void setNumeroConta(int numeroConta) {
+    public void setNumeroConta(String numeroConta) {
         this.numeroConta = numeroConta;
     }
 
-    public int getAgencia() {
+    public String getAgencia() {
         return agencia;
     }
 
-    public void setAgencia(int agencia) {
+    public void setAgencia(String agencia) {
         this.agencia = agencia;
     }
 

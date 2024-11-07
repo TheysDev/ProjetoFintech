@@ -1,6 +1,7 @@
 package br.com.fiap.fintech.model;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class CarteiraAtivo {
 
@@ -48,6 +49,7 @@ public class CarteiraAtivo {
     }
 
     public LocalDate getDataUltimaAtualizacao() {
+        dataUltimaAtualizacao = LocalDate.now();
         return dataUltimaAtualizacao;
     }
 
@@ -64,10 +66,20 @@ public class CarteiraAtivo {
     }
 
     public double getQuantidadeAtivo() {
+
         return quantidadeAtivo;
     }
 
     public void setQuantidadeAtivo(double quantidadeAtivo) {
         this.quantidadeAtivo = quantidadeAtivo;
     }
+
+    public int getIdCarteira(){
+        return carteira.getIdCarteira();
+    }
+
+    public int getIdAtivo(){
+        return ativo.getIdAtivo();
+    }
 }
+

@@ -9,7 +9,6 @@ public class Alocacao {
     public Alocacao(int idAlocacao, String descricaoAlocacao, double valorAlocacao) {
         this.idAlocacao = idAlocacao;
         this.descricaoAlocacao = descricaoAlocacao;
-        this.saldoAlocacao = valorAlocacao;
     }
 
     public Alocacao(){}

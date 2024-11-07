@@ -12,7 +12,7 @@ public class Carteira {
         this.idCarteira = idCarteira;
         this.nomeCarteira = nomeCarteira;
         this.saldoCarteira = saldoCarteira;
-        this.usuario = usuario;
+        //this.usuario = usuario;
     }
 
     public Carteira() {}
