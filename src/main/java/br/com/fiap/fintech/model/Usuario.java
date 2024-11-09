@@ -4,17 +4,25 @@ public class Usuario {
 
     private int idUsuario;
     private String nomeUsuario;
-    private int cpfUsuario;
+    private String cpfUsuario;
     private String emailUsuario;
     private String nomeCompletoUsuario;
     private String senhaUsuario;
+    private boolean statusUsuario;
 
-    public Usuario(int idUsuario, String nomeUsuario, int cpfUsuario, String emailUsuario, String nomeCompletoUsuario, String senhaUsuario) {
+    public Usuario(int idUsuario, String nomeUsuario, String cpfUsuario, String emailUsuario, String nomeCompletoUsuario, String senhaUsuario, boolean statusUsuario) {
         this.idUsuario = idUsuario;
         this.nomeUsuario = nomeUsuario;
         this.cpfUsuario = cpfUsuario;
         this.emailUsuario = emailUsuario;
         this.nomeCompletoUsuario = nomeCompletoUsuario;
+        this.senhaUsuario = senhaUsuario;
+        this.statusUsuario = statusUsuario;
+
+    }
+
+    public Usuario(String emailUsuario,String senhaUsuario){
+        this.emailUsuario = emailUsuario;
         this.senhaUsuario = senhaUsuario;
     }
 
@@ -36,11 +44,11 @@ public class Usuario {
         this.nomeUsuario = nomeUsuario;
     }
 
-    public int getCpfUsuario() {
+    public String getCpfUsuario() {
         return cpfUsuario;
     }
 
-    public void setCpfUsuario(int cpfUsuario) {
+    public void setCpfUsuario(String cpfUsuario) {
         this.cpfUsuario = cpfUsuario;
     }
 
@@ -64,7 +72,17 @@ public class Usuario {
         return senhaUsuario;
     }
 
+    public boolean isStatusUsuario() {
+        return statusUsuario;
+    }
+
+    public void setStatusUsuario(boolean statusUsuario) {
+        this.statusUsuario = statusUsuario;
+    }
+
     public void setSenhaUsuario(String senhaUsuario) {
         this.senhaUsuario = senhaUsuario;
     }
+
+
 }

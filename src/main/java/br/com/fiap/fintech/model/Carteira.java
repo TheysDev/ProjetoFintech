@@ -48,4 +48,8 @@ public class Carteira {
     public void setNomeCarteira(String nomeCarteira) {
         this.nomeCarteira = nomeCarteira;
     }
+
+    public int getIdUsuario() {
+        return usuario.getIdUsuario();
+    }
 }
