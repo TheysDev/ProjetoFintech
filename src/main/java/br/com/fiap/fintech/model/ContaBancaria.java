@@ -6,21 +6,35 @@ public class ContaBancaria {
     private String numeroConta;
     private String agencia;
     private double saldo;
-    private String status;
+    private boolean status;
 
     private Banco banco;
     private Usuario usuario;
 
-    public ContaBancaria(int idConta, String numeroConta, String agencia, double saldo, Banco banco, Usuario usuario) {
+    public ContaBancaria(int idConta, String numeroConta, String agencia, double saldo, Banco banco, Usuario usuario, boolean status) {
         this.idConta = idConta;
         this.numeroConta = numeroConta;
         this.agencia = agencia;
         this.saldo = saldo;
         this.banco = banco;
         this.usuario = usuario;
+        this.status = status;
     }
 
     public ContaBancaria() {}
+
+    public ContaBancaria(int idConta, String numeroConta, String agencia, double saldo,  String nomeBanco) {
+        this.idConta = idConta;
+        this.numeroConta = numeroConta;
+        this.agencia = agencia;
+        this.saldo = saldo;
+        this.banco = new Banco(nomeBanco, "0");
+
+    }
+
+    public ContaBancaria(String numeroConta) {
+        this.numeroConta = numeroConta;
+    }
 
     public int getIdConta() {
         return idConta;
@@ -54,11 +68,11 @@ public class ContaBancaria {
         this.saldo = saldo;
     }
 
-    public String getStatus() {
+    public boolean isStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 
@@ -77,4 +91,13 @@ public class ContaBancaria {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
+
+    public int getIdUsuario() {
+        return usuario.getIdUsuario();
+    }
+
+    public String getNumeroBanco() {
+        return banco.getNumeroBanco();
+    }
+
 }

@@ -3,7 +3,6 @@ package br.com.fiap.fintech.dao.impl;
 import br.com.fiap.fintech.dao.CarteiraDao;
 import br.com.fiap.fintech.factory.ConnectionFactory;
 import br.com.fiap.fintech.model.Carteira;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

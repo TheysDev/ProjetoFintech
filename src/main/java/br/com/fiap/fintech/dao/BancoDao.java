@@ -12,5 +12,5 @@ public interface BancoDao {
     void alterarBanco(Banco banco) throws SQLException;
     void excluirBanco(Banco banco) throws SQLException, EntidadeNaoEcontradaException;
     Banco buscarBanco(int id) throws SQLException, EntidadeNaoEcontradaException;
-    List<Banco> ListarBancos();
+    List<Banco> ListarBancos() throws SQLException;
 }

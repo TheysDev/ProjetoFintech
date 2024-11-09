@@ -11,6 +11,10 @@ public class Alocacao {
         this.descricaoAlocacao = descricaoAlocacao;
     }
 
+    public Alocacao(String descricaoAlocacao){
+        this.descricaoAlocacao = descricaoAlocacao;
+    }
+
     public Alocacao(){}
 
     public int getIdAlocacao() {

@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class OracleBancoDao implements BancoDao {
@@ -47,6 +48,7 @@ public class OracleBancoDao implements BancoDao {
 
     @Override
     public Banco buscarBanco(int nr_Banco) throws SQLException, EntidadeNaoEcontradaException {
+
         stm = conexao.prepareStatement("SELECT * FROM T_FIN_BANCO WHERE nr_banco = ?");
         stm.setInt(1, nr_Banco);
         ResultSet result = stm.executeQuery();
@@ -58,7 +60,31 @@ public class OracleBancoDao implements BancoDao {
     }
 
     @Override
-    public List<Banco> ListarBancos() {
-        return List.of();
+    public List<Banco> ListarBancos() throws SQLException {
+
+        List<Banco> lista = new ArrayList<>();
+        ResultSet rs = null;
+
+        try {
+            stm = conexao.prepareStatement("SELECT * FROM T_FIN_BANCO");
+            rs = stm.executeQuery();
+
+            while (rs.next()) {
+                String nomeBanco = rs.getString("nm_banco");
+                String nrBanco = rs.getString("nr_banco");
+                Banco banco = new Banco(nomeBanco,nrBanco);
+                lista.add(banco);
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                stm.close();
+                rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return lista;
     }
 }
