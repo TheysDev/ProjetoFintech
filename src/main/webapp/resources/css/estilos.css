@@ -1,0 +1,43 @@
+:root{
+    --cinza-claro : #f7f7f8;
+    --cinza-escuro : #30343F;
+    --azul-escuro: #4189E6;
+}
+
+
+.tela-principal{
+    height: 100vh;
+}
+
+.logo{
+    height: 50%;
+}
+@media(max-width: 768px){
+    .logo{
+        height: 200px;
+    }
+}
+
+.input-custom{
+    background-color: var(--cinza-claro);
+}
+
+.fonte-pequena{
+    font-size: 12px;
+}
+
+.btn-cadastrar{
+    width: 80%;
+}
+
+.check-custom{
+    border: 1px solid gray;
+}
+
+.negrito{
+    font-size: small;
+    font-weight: bold;
+}
+
+
+
