@@ -40,28 +40,16 @@
                     </span>
               </c:if>
 
-
-
-            <div class="d-flex gap-2 mx-3">
-                <input type="checkbox" class="form-check-input check-custom" id="termoUso">
-                <label for="termoUso" class="form-check-label fonte-pequena">
-                    Manter Login
-                </label>
-            </div>
-
             <div class="d-flex justify-content-center mt-4">
-                <button class="btn btn-primary btn-cadastrar">Logar</button>
+                <button type="submit" class="btn btn-primary btn-cadastrar">Logar</button>
             </div>
             <div class="text-center mt-3">
                 <p class="fonte-pequena">
                     Não possúi conta? <a href="cadastro.jsp">Cadastre-se aqui.</a>
                 </p>
-
-
             </div>
         </div>
     </div>
-    </form>
     <div class="d-flex justify-content-center align-items-center col-9 d-lg-flex d-none tela-logo">
         <img src="resources/img/cash-controller-logo.png" alt="CachController Logo" class="logo">
     </div>

@@ -47,10 +47,10 @@ public class OracleBancoDao implements BancoDao {
     }
 
     @Override
-    public Banco buscarBanco(int nr_Banco) throws SQLException, EntidadeNaoEcontradaException {
+    public Banco buscarBanco(String nrBanco) throws SQLException, EntidadeNaoEcontradaException {
 
         stm = conexao.prepareStatement("SELECT * FROM T_FIN_BANCO WHERE nr_banco = ?");
-        stm.setInt(1, nr_Banco);
+        stm.setString(1, nrBanco);
         ResultSet result = stm.executeQuery();
         if (!result.next())
             throw new EntidadeNaoEcontradaException("Banco não encontrado");

@@ -14,12 +14,11 @@ public class Movimentacao {
     private ContaBancaria contaBancaria;
     private Alocacao alocacao;
 
-    public Movimentacao(int idMovimentacao, double valorMovimentacao, LocalDate dataMovimentacao, String tipoMovimentacao, LocalDate dataCriacaoMovimentacao, ContaBancaria contaBancaria, Alocacao alocacao) {
+    public Movimentacao(int idMovimentacao, double valorMovimentacao, LocalDate dataMovimentacao, String tipoMovimentacao, ContaBancaria contaBancaria, Alocacao alocacao) {
         this.idMovimentacao = idMovimentacao;
         this.valorMovimentacao = valorMovimentacao;
         this.dataMovimentacao = dataMovimentacao;
         this.tipoMovimentacao = tipoMovimentacao;
-        this.dataCriacaoMovimentacao = dataCriacaoMovimentacao;
         this.contaBancaria = contaBancaria;
         this.alocacao = alocacao;
     }
@@ -97,5 +96,15 @@ public class Movimentacao {
 
     public int getIdConta() {
         return contaBancaria.getIdConta();
+    }
+
+    public String getNumeroConta() {
+        String numeroConta = contaBancaria.getNumeroConta();
+        return numeroConta;
+    }
+
+    public String getDescricaoAlocacao() {
+        String nomeAlocacao = alocacao.getDescricaoAlocacao();
+        return alocacao.getDescricaoAlocacao();
     }
 }

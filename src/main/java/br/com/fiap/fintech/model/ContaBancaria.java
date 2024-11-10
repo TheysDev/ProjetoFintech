@@ -23,13 +23,20 @@ public class ContaBancaria {
 
     public ContaBancaria() {}
 
-    public ContaBancaria(int idConta, String numeroConta, String agencia, double saldo,  String nomeBanco) {
+    public ContaBancaria(int idConta, String numeroConta, String agencia, double saldo,  String numeroBanco, String nomeBanco) {
         this.idConta = idConta;
         this.numeroConta = numeroConta;
         this.agencia = agencia;
         this.saldo = saldo;
-        this.banco = new Banco(nomeBanco, "0");
+        this.banco = new Banco(nomeBanco, numeroBanco);
 
+    }
+    public ContaBancaria(int idConta, String numeroConta, String agencia, double saldo, Banco banco) {
+        this.idConta = idConta;
+        this.numeroConta = numeroConta;
+        this.agencia = agencia;
+        this.saldo = saldo;
+        this.banco = banco;
     }
 
     public ContaBancaria(String numeroConta) {
@@ -98,6 +105,11 @@ public class ContaBancaria {
 
     public String getNumeroBanco() {
         return banco.getNumeroBanco();
+    }
+
+    public String getNomeBanco() {
+        String nomeBanco = banco.getNomeBanco();
+        return nomeBanco;
     }
 
 }

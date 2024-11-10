@@ -6,7 +6,7 @@ public class Alocacao {
     private String descricaoAlocacao;
     private double saldoAlocacao;
 
-    public Alocacao(int idAlocacao, String descricaoAlocacao, double valorAlocacao) {
+    public Alocacao(int idAlocacao, String descricaoAlocacao) {
         this.idAlocacao = idAlocacao;
         this.descricaoAlocacao = descricaoAlocacao;
     }

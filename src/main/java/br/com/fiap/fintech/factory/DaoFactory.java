@@ -30,4 +30,12 @@ public class DaoFactory {
     public static UsuarioDao getUsuarioDao() throws SQLException {
         return new OracleUsuarioDao();
     }
+
+    public static MovimentacaoDao getMovimentacaoDao() throws SQLException {
+        return new OracleMovimentacaoDao();
+    }
+
+    public static ContaBancariaDao getContaBancariaDao() throws SQLException {
+        return new OracleContaBancariaDao();
+    }
 }

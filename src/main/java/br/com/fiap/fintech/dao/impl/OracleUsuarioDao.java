@@ -61,16 +61,15 @@ public class OracleUsuarioDao implements UsuarioDao {
         stm = conexao.prepareStatement("SELECT * FROM T_FIN_USUARIO WHERE ds_email = ? AND ds_senha = ?");
 
         stm.setString(1, usuario.getEmailUsuario());
-        System.out.println(usuario.getEmailUsuario());
         stm.setString(2, CriptografiaUtils.criptografar(usuario.getSenhaUsuario()));
-        System.out.println(CriptografiaUtils.criptografar(usuario.getSenhaUsuario()) );
+
         rs = stm.executeQuery();
 
         if (rs.next()) {
-            System.out.println("verificado");
+            usuario.setIdUsuario(rs.getInt("id_usuario"));
             return true;
         }
-        System.out.println("nao verificado");
+
         try {
             stm.close();
             rs.close();

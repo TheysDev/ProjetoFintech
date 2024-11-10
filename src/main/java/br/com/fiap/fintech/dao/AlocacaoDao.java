@@ -11,6 +11,6 @@ public interface AlocacaoDao {
     void cadastrar(Alocacao alocacao) throws SQLException;
     void alterar(Alocacao alocacao) throws SQLException, EntidadeNaoEcontradaException;
     void excluir(Alocacao alocacao) throws SQLException;
-    void consultar(Alocacao alocacao);
-    List<Alocacao> listar();
+    Alocacao buscarId(int id) throws SQLException;
+    List<Alocacao> listar() throws SQLException;
 }

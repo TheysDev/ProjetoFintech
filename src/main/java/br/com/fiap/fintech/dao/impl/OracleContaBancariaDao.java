@@ -1,8 +1,15 @@
 package br.com.fiap.fintech.dao.impl;
 
+import br.com.fiap.fintech.dao.BancoDao;
 import br.com.fiap.fintech.dao.ContaBancariaDao;
+import br.com.fiap.fintech.exception.EntidadeNaoEcontradaException;
 import br.com.fiap.fintech.factory.ConnectionFactory;
+import br.com.fiap.fintech.factory.DaoFactory;
+import br.com.fiap.fintech.model.Banco;
 import br.com.fiap.fintech.model.ContaBancaria;
+import br.com.fiap.fintech.model.Usuario;
+import jakarta.servlet.http.HttpSession;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -82,10 +89,10 @@ public class OracleContaBancariaDao implements ContaBancariaDao {
         ResultSet rs = null;
 
 
-        String sql = "SELECT cb.id_conta, cb.nr_conta, cb.nr_agencia, cb.nr_saldo, b.nm_banco " +
-                "FROM T_FIN_CONTA_BANCARIA cb " +
-                "JOIN T_BANCO b ON cb.nr_banco = b.nr_banco " +
-                "WHERE cb.ds_status_conta = TRUE AND cb.id_usuario = ?";
+        String sql = "SELECT T_FIN_CONTA_BANCARIA.id_conta, T_FIN_CONTA_BANCARIA.nr_conta, T_FIN_CONTA_BANCARIA.nr_agencia, T_FIN_CONTA_BANCARIA.nr_saldo, T_FIN_CONTA_BANCARIA.nr_banco, T_FIN_BANCO.nm_banco " +
+                "FROM T_FIN_CONTA_BANCARIA " +
+                "INNER JOIN T_FIN_BANCO ON T_FIN_CONTA_BANCARIA.nr_banco = T_FIN_BANCO.nr_banco " +
+                "WHERE T_FIN_CONTA_BANCARIA.ds_status_conta = 'Ativo' AND T_FIN_CONTA_BANCARIA.id_usuario = ?";
 
         stm = conexao.prepareStatement(sql);
         stm.setInt(1, idUsuarioLogado);
@@ -96,20 +103,40 @@ public class OracleContaBancariaDao implements ContaBancariaDao {
             String numeroConta = rs.getString("nr_conta");
             String agencia = rs.getString("nr_agencia");
             double saldo = rs.getDouble("nr_saldo");
+            String numeroBanco = rs.getString("nr_banco");
             String nomeBanco = rs.getString("nm_banco");
 
-            ContaBancaria conta = new ContaBancaria(idConta, numeroConta, agencia, saldo, nomeBanco);
+            ContaBancaria conta = new ContaBancaria(idConta, numeroConta, agencia, saldo, numeroBanco, nomeBanco);
             lista.add(conta);
         }
         try {
             stm.close();
             rs.close();
-            conexao.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
 
         return lista;
+    }
+
+    @Override
+    public ContaBancaria buscar(int id) throws SQLException, EntidadeNaoEcontradaException {
+        stm = conexao.prepareStatement("SELECT * FROM T_FIN_CONTA_BANCARIA WHERE id_conta = ?");
+        stm.setInt(1, id);
+        ResultSet result = stm.executeQuery();
+        if (!result.next())
+            throw new EntidadeNaoEcontradaException("Conta Bancaria não encontrada");
+
+        int idConta = result.getInt("id_conta");
+        String numeroBanco = result.getString("nr_banco");
+        String numeroConta = result.getString("nr_conta");
+        String agencia = result.getString("nr_agencia");
+        double saldo = result.getDouble("nr_saldo");
+
+        BancoDao dao = DaoFactory.getBancoDao();
+        Banco banco = dao.buscarBanco(numeroBanco);
+
+        return new ContaBancaria(idConta, numeroConta, agencia, saldo, banco);
     }
 
 }

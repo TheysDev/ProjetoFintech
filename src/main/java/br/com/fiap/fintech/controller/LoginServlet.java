@@ -9,7 +9,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -34,7 +33,7 @@ public class LoginServlet extends HttpServlet {
             if(dao.validarLogin(usuario)){
                 HttpSession session = req.getSession();
                 session.setAttribute("usuario", usuario);
-                req.getRequestDispatcher("/index.jsp").forward(req, resp);
+                req.getRequestDispatcher("/despesas.jsp").forward(req, resp);
             } else {
                 req.setAttribute("erro", "Usuario ou senha incorretos");
                 req.getRequestDispatcher("/login.jsp").forward(req, resp);
