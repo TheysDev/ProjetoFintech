@@ -10,19 +10,15 @@ public class VendaAtivo {
     private LocalDate dataCriacaoVenda;
     private LocalDate dataAtualizacaoVenda;
 
-    private MovimentacaoContaBancaria movimentacaoContaBancaria;
-    private MovimentacaoCarteira movimentacaoCarteira;
+
     private Ativo ativo;
 
-    public VendaAtivo(int idVendaAtivo, double quantidadeVendida, double valorUnitario, LocalDate dataCriacaoVenda, MovimentacaoContaBancaria movimentacaoContaBancaria
-                       , MovimentacaoCarteira movimentacaoCarteira, Ativo ativo) {
+    public VendaAtivo(int idVendaAtivo, double quantidadeVendida, double valorUnitario, LocalDate dataCriacaoVenda, Ativo ativo) {
 
         this.idVendaAtivo = idVendaAtivo;
         this.quantidadeVendida = quantidadeVendida;
         this.valorUnitario = valorUnitario;
         this.dataCriacaoVenda = dataCriacaoVenda;
-        this.movimentacaoContaBancaria = movimentacaoContaBancaria;
-        this.movimentacaoCarteira = movimentacaoCarteira;
         this.ativo = ativo;
     }
 
@@ -42,22 +38,6 @@ public class VendaAtivo {
 
     public void setAtivo(Ativo ativo) {
         this.ativo = ativo;
-    }
-
-    public MovimentacaoCarteira getMovimentacaoCarteira() {
-        return movimentacaoCarteira;
-    }
-
-    public void setMovimentacaoCarteira(MovimentacaoCarteira movimentacaoCarteira) {
-        this.movimentacaoCarteira = movimentacaoCarteira;
-    }
-
-    public MovimentacaoContaBancaria getMovimentacaoContaBancaria() {
-        return movimentacaoContaBancaria;
-    }
-
-    public void setMovimentacaoContaBancaria(MovimentacaoContaBancaria movimentacaoContaBancaria) {
-        this.movimentacaoContaBancaria = movimentacaoContaBancaria;
     }
 
     public LocalDate getDataAtualizacaoVenda() {

@@ -19,13 +19,6 @@ public class DaoFactory {
         return new OracleBancoDao();
     }
 
-    public static CarteiraAtivoDao getCarteiraAtivoDao() throws SQLException {
-        return new OracleCarteiraAtivoDao();
-    }
-
-    public static CarteiraDao getCarteiraDao() throws SQLException {
-        return new OracleCarteiraDao();
-    }
 
     public static UsuarioDao getUsuarioDao() throws SQLException {
         return new OracleUsuarioDao();

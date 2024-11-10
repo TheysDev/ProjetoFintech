@@ -31,12 +31,12 @@
             <div class="offcanvas-header">
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
-            <form class="d-flex flex-column aling-items-center mt-3 offcanvas-body" role="search">
+            <form class="d-flex flex-column aling-items-center offcanvas-body" role="search">
                 <div>
                     <div class="d-flex justify-content-center">
                         <img src="resources/img/cash-controller-logo.png" alt="" class="logo-sidebar mt-5">
                     </div>
-                    <li class="lista-sem-pontos mt-5">
+                    <li class="lista-sem-pontos">
                         <a href="#" class="link-custom">
                             <h4>Dashboard</h4>
                         </a>
@@ -105,7 +105,7 @@
             <h4>Controle de Despesas</h4>
         </div>
         <div class="d-flex flex-column flex-lg-row gap-3 w-100 justify-content-center">
-            <div class="card card-custom align-items-center card-menor col-12 col-lg-4">
+            <div class="card card-custom align-items-center card-menor col-12 col-lg-4 scroll2">
 
                 <div class="text-center">
                     <h5 class="cor-azul">Cadastrar Nova Despesa</h5>
@@ -158,7 +158,7 @@
                     </form>
                 </div>
             </div>
-            <div class="d-flex flex-column align-items-center card card-custom card-maior col-12 col-lg-8">
+            <div class="d-flex flex-column align-items-center card card-custom card-maior col-12 col-lg-8 scroll2">
                 <h5 class="cor-azul">Historico de Despesas</h5>
                 <div class="scroll">
                     <table class="table table-hover text-center ">

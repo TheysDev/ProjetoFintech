@@ -11,18 +11,16 @@ public class CompraAtivo {
     private LocalDate dataAtualizacaoCompraAtivo;
 
     private Ativo ativo;
-    private MovimentacaoCarteira movimentacaoCarteira;
-    private MovimentacaoContaBancaria movimentacaoContaBancaria;
 
-    public CompraAtivo(int idCompraAtivo,double quantidadeAtivo, double valorUnitarioAtivo, LocalDate dataCriacaoCompraAtivo, Ativo ativo, MovimentacaoCarteira movimentacaoCarteira, MovimentacaoContaBancaria movimentacaoContaBancaria) {
+
+    public CompraAtivo(int idCompraAtivo,double quantidadeAtivo, double valorUnitarioAtivo, LocalDate dataCriacaoCompraAtivo, Ativo ativo) {
 
         this.idCompraAtivo = idCompraAtivo;
         this.quantidadeAtivo = quantidadeAtivo;
         this.valorUnitarioAtivo = valorUnitarioAtivo;
         this.dataCriacaoCompraAtivo = dataCriacaoCompraAtivo;
         this.ativo = ativo;
-        this.movimentacaoCarteira = movimentacaoCarteira;
-        this.movimentacaoContaBancaria = movimentacaoContaBancaria;
+
     }
 
 
