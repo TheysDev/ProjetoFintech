@@ -63,9 +63,9 @@ public class MovimentacaoServlet extends HttpServlet {
     private void editarDespesas(HttpServletRequest req, HttpServletResponse resp) {
     }
 
-    private void cadastrarDespesas(HttpServletRequest req, HttpServletResponse resp) throws SQLException, EntidadeNaoEcontradaException {
+    private void cadastrarDespesas(HttpServletRequest req, HttpServletResponse resp) throws SQLException, EntidadeNaoEcontradaException, ServletException, IOException {
 
-        String valor = req.getParameter("valor");
+        String valor = req.getParameter("valor").replace(',','.');
         String dataDespesa = req.getParameter("dataDespesa");
         String idAlocacao = req.getParameter("alocacao");
         String idConta = req.getParameter("conta");
@@ -78,7 +78,6 @@ public class MovimentacaoServlet extends HttpServlet {
 
         int idIntAlocacao = Integer.parseInt(idAlocacao);
 
-
         ContaBancaria contaBancaria = contaBancDao.buscar(id);
 
         Alocacao alocacao = alocDao.buscarId(idIntAlocacao);
@@ -86,6 +85,8 @@ public class MovimentacaoServlet extends HttpServlet {
         Movimentacao movimentacao = new Movimentacao(0, valorDespesa, dataDespesaLocalDate, tipoMov, contaBancaria, alocacao);
 
         movDao.inserir(movimentacao);
+
+        listarDadosDespesas(req, resp);
 
     }
 
@@ -95,18 +96,22 @@ public class MovimentacaoServlet extends HttpServlet {
         String acao = req.getParameter("acao");
 
         switch (acao) {
-            case "listar":
+            case "form-receitas":
+                listarDadosReceitas(req, resp);
                 break;
-            case "form-depesas":
+            case "form-despesas":
                 try {
-                    listarDados(req, resp);
+                    listarDadosDespesas(req, resp);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
         }
     }
 
-    private void listarDados(HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
+    private void listarDadosReceitas(HttpServletRequest req, HttpServletResponse resp) {
+    }
+
+    private void listarDadosDespesas(HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
 
         List<Alocacao> lista = alocDao.listar();
 

@@ -35,7 +35,6 @@ public class OracleMovimentacaoDao implements MovimentacaoDao {
 
         try {
             stm.close();
-            conexao.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -57,7 +56,6 @@ public class OracleMovimentacaoDao implements MovimentacaoDao {
 
         try {
             stm.close();
-            conexao.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -73,7 +71,7 @@ public class OracleMovimentacaoDao implements MovimentacaoDao {
         }
         try {
             stm.close();
-            conexao.close();
+
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

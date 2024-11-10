@@ -174,117 +174,33 @@
                         <tbody>
                         <c:forEach items="${despesas}" var="d">
                             <tr>
-                                <td class="text-primary">${d.nomeAlocacao}</td>
+                                <td class="text-primary">${d.getDescricaoAlocacao()}</td>
                                 <td class="text-center">
                                     <fmt:parseDate
-                                        value="${d.dataMovimentacao}" pattern="yyyy-MM-dd" var="dataFmt"/>
+                                            value="${d.dataMovimentacao}" pattern="yyyy-MM-dd" var="dataFmt"/>
                                     <fmt:formatDate value="${dataFmt}" pattern="dd/MM/yyyy"/>
-                                       </td>
-                                <td>123456</td>
+                                </td>
+                                <td>${d.getNumeroConta()}</td>
                                 <td class="text-danger">
-                                    <fmt:formatNumber
-                                            value = "${d.valorMovimentacao}"/>
+                                    R$ <fmt:formatNumber
+                                        value="${d.valorMovimentacao}"/>
                                 </td>
                             </tr>
                         </c:forEach>
                         </tbody>
                     </table>
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                         aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Escolha uma ação</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Fechar"></button>
-                                </div>
-                                <div class="modal-body">
-                                    Selecione a ação que deseja realizar.
-                                </div>
-                                <div class="modal-footer d-flex justify-content-center">
-                                    <button type="button" class="btn btn-danger">Excluir</button>
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                            data-bs-target="#modalEditar">Editar
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal fade" id="modalEditar" tabindex="-1" aria-labelledby="exampleModalLabel"
-                         aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Editando Despesa:</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <form>
-                                        <div class="mt-4">
-                                            <label for="nome" class="form-label">
-                                                <h6>Descrição:</h6>
-                                            </label>
-                                            <input type="text" class="form-control input-custom" id="nome"
-                                                   placeholder="Aluguel">
-                                        </div>
-                                        <div>
-                                            <div class="d-flex flex-column gap-4 mt-4">
-                                                <div class="mt-2">
-                                                    <label for="valor" class="form-label">
-                                                        <h6>Valor:</h6>
-                                                    </label>
-                                                    <input type="text" class="form-control input-custom" id="valor"
-                                                           placeholder="R$ 1.000,00">
-                                                </div>
-                                                <div class="mt-2 ">
-                                                    <label for="data" class="form-label">
-                                                        <h6>Data:</h6>
-                                                    </label>
-                                                    <input type="date" class="form-control input-custom" id="data">
-                                                </div>
-                                                <div class="d-flex flex-column mt-2 mb-4">
-                                                    <h6>Conta Bancária:</h6>
-                                                    <div class="btn-group">
-                                                        <button type="button"
-                                                                class="btn btn-secondary btn-selecionar1">Selecione
-                                                        </button>
-                                                        <button id="dropdownButton" type="button"
-                                                                class="btn btn-secondary dropdown-toggle dropdown-toggle-split btn-selecionar2"
-                                                                data-bs-toggle="dropdown" aria-expanded="false"
-                                                                data-bs-reference="parent">
-                                                            <span class="visually-hidden">Toggle Dropdown</span>
-                                                        </button>
-                                                        <ul class="dropdown-menu">
-                                                            <li><a class="dropdown-item " href="#">Nubanck</a></li>
-                                                            <li><a class="dropdown-item " href="#">Itau</a></li>
-                                                            <li><a class="dropdown-item " href="#">Bradesco</a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Cancelar
-                                    </button>
-                                    <button type="button" class="btn btn-primary">Salvar</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="d-flex mt-auto gap-4">
-                    <button type="button" class="btn btn-limpar fs-4 p-0"><i class="bi bi-arrow-left"></i></button>
-                    <button type="button" class="btn btn-criar fs-4 p-0"><i class="bi bi-arrow-right"></i></button>
                 </div>
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <div class="d-flex mt-auto gap-4">
+        <button type="button" class="btn btn-limpar fs-4 p-0"><i class="bi bi-arrow-left"></i></button>
+        <button type="button" class="btn btn-criar fs-4 p-0"><i class="bi bi-arrow-right"></i></button>
+    </div>
+</div>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </div>
 </body>
 </html>

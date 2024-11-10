@@ -61,7 +61,6 @@ public class OracleContaBancariaDao implements ContaBancariaDao {
 
         try {
             stm.close();
-            conexao.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -76,7 +75,6 @@ public class OracleContaBancariaDao implements ContaBancariaDao {
 
         try {
             stm.close();
-            conexao.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

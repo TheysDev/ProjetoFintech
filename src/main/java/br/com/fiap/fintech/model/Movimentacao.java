@@ -105,6 +105,6 @@ public class Movimentacao {
 
     public String getDescricaoAlocacao() {
         String nomeAlocacao = alocacao.getDescricaoAlocacao();
-        return alocacao.getDescricaoAlocacao();
+        return nomeAlocacao;
     }
 }

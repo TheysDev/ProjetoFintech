@@ -8,7 +8,7 @@
 <body>
   <h1>BEM VINDO SEU LINDO</h1>
 
-  <a href="movimentacao?acao=form-alocacao" class="link-custom ativado">
+  <a href="movimentacao?acao=form-despesas" class="link-custom ativado">
       <h4>Despesas</h4>
   </a>
 </body>
