@@ -13,10 +13,11 @@ public class ConnectionFactory {
     static String usuario = dotenv.get("DATABASE_USUARIO");
     static String senha = dotenv.get("DATABASE_SENHA");
 
-
     private static final String URL = url;
     private static final String USUARIO = usuario;
     private static final String SENHA = senha;
+
+    private static Connection connection;
 
     static {
         try {
@@ -26,7 +27,11 @@ public class ConnectionFactory {
         }
     }
     public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(URL, USUARIO, SENHA);
+        if (connection == null || connection.isClosed()) {
+            connection = DriverManager.getConnection(URL, USUARIO, SENHA);
+        }
+        return connection;
     }
 }
+
 

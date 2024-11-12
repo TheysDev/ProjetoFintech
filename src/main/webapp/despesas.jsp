@@ -1,8 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@taglib prefix="fmt" uri="jakarta.tags.fmt" %>
-<!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
     <meta charset="UTF-8">
@@ -111,7 +110,7 @@
                     <h5 class="cor-azul">Cadastrar Nova Despesa</h5>
                 </div>
                 <div>
-                    <form action="movimentacao?acao=cadastrarDespesas" method="post">
+                    <form action="movimentacao?acao=despesas" method="post">
                         <div class="d-flex flex-column gap-4 mt-4">
                             <div class="mt-2">
                                 <label for="valorDespesa" class="form-label">
@@ -185,6 +184,13 @@
                                     R$ <fmt:formatNumber
                                         value="${d.valorMovimentacao}"/>
                                 </td>
+                                <td class="text-danger">
+                                    <c:url value="movimentacao" var="link">
+                                        <c:param name="acao" value="form-despesas-editar"/>
+                                        <c:param name="id" value="${d.idMovimentacao}"/>
+                                    </c:url>
+                                    <a href="${link}" class=" btn btn-primary">Editar</a>
+                                </td>
                             </tr>
                         </c:forEach>
                         </tbody>
@@ -193,14 +199,13 @@
             </div>
         </div>
     </div>
-    <div class="d-flex mt-auto gap-4">
-        <button type="button" class="btn btn-limpar fs-4 p-0"><i class="bi bi-arrow-left"></i></button>
-        <button type="button" class="btn btn-criar fs-4 p-0"><i class="bi bi-arrow-right"></i></button>
-    </div>
 </div>
+<div class="d-flex mt-auto gap-4">
+    <button type="button" class="btn btn-limpar fs-4 p-0"><i class="bi bi-arrow-left"></i></button>
+    <button type="button" class="btn btn-criar fs-4 p-0"><i class="bi bi-arrow-right"></i></button>
 </div>
-</div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</div>
+
 </body>
 </html>

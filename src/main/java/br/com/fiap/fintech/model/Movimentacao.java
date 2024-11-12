@@ -23,7 +23,8 @@ public class Movimentacao {
         this.alocacao = alocacao;
     }
 
-    public Movimentacao(String descricaoAlocacao, LocalDate dataMovimentacao, String numeroConta, double valorMovimentacao){
+    public Movimentacao(int idMovimentacao, String descricaoAlocacao, LocalDate dataMovimentacao, String numeroConta, double valorMovimentacao){
+        this.idMovimentacao = idMovimentacao;
         this.alocacao = new Alocacao(descricaoAlocacao);
         this.dataMovimentacao = dataMovimentacao;
         this.contaBancaria = new ContaBancaria(numeroConta);

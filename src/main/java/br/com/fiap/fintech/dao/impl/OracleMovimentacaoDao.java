@@ -1,8 +1,14 @@
 package br.com.fiap.fintech.dao.impl;
 
+import br.com.fiap.fintech.dao.AlocacaoDao;
+import br.com.fiap.fintech.dao.ContaBancariaDao;
 import br.com.fiap.fintech.dao.MovimentacaoDao;
 import br.com.fiap.fintech.exception.EntidadeNaoEcontradaException;
 import br.com.fiap.fintech.factory.ConnectionFactory;
+import br.com.fiap.fintech.factory.DaoFactory;
+import br.com.fiap.fintech.model.Alocacao;
+import br.com.fiap.fintech.model.Banco;
+import br.com.fiap.fintech.model.ContaBancaria;
 import br.com.fiap.fintech.model.Movimentacao;
 import java.sql.*;
 import java.time.LocalDate;
@@ -63,7 +69,8 @@ public class OracleMovimentacaoDao implements MovimentacaoDao {
 
     @Override
     public void excluir(Movimentacao movimentacao) throws SQLException, EntidadeNaoEcontradaException {
-        stm = conexao.prepareStatement("DELETE FROM T_FIN_MOVIMENTACAO WHERE id_ativo = ?");
+
+        stm = conexao.prepareStatement("DELETE FROM T_FIN_MOVIMENTACAO WHERE id_movimentacao = ?");
         stm.setInt(1,movimentacao.getIdMovimentacao());
         int linha = stm.executeUpdate();
         if (linha == 0) {
@@ -71,7 +78,6 @@ public class OracleMovimentacaoDao implements MovimentacaoDao {
         }
         try {
             stm.close();
-
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -80,10 +86,11 @@ public class OracleMovimentacaoDao implements MovimentacaoDao {
     @Override
     public List<Movimentacao> listarDespesas() throws SQLException {
 
+
         List<Movimentacao> lista = new ArrayList<Movimentacao>();
         ResultSet rs = null;
 
-        stm = conexao.prepareStatement("SELECT T_FIN_ALOCACAO.ds_alocacao, T_FIN_MOVIMENTACAO.dt_movimentacao, T_FIN_CONTA_BANCARIA.nr_conta, T_FIN_MOVIMENTACAO.nr_valor_total " +
+        stm = conexao.prepareStatement("SELECT T_FIN_ALOCACAO.ds_alocacao, T_FIN_MOVIMENTACAO.dt_movimentacao, T_FIN_CONTA_BANCARIA.nr_conta, T_FIN_MOVIMENTACAO.nr_valor_total, T_FIN_MOVIMENTACAO.id_movimentacao " +
                 "FROM T_FIN_MOVIMENTACAO INNER JOIN T_FIN_ALOCACAO ON T_FIN_ALOCACAO.id_alocacao = T_FIN_MOVIMENTACAO.id_alocacao INNER JOIN T_FIN_CONTA_BANCARIA ON T_FIN_CONTA_BANCARIA.id_conta = T_FIN_MOVIMENTACAO.id_conta " +
                 "WHERE ds_tipo_mov = 'DESPESA'");
         rs = stm.executeQuery();
@@ -93,11 +100,12 @@ public class OracleMovimentacaoDao implements MovimentacaoDao {
             String dataMov = rs.getString("dt_movimentacao").split(" ")[0];
             String numeroConta = rs.getString("nr_conta");
             double valor = rs.getDouble("nr_valor_total");
+            int idMov = rs.getInt("id_movimentacao");
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDate date = LocalDate.parse(dataMov, formatter);
 
-            Movimentacao mov = new Movimentacao(nomeAlocacao, date, numeroConta, valor);
+            Movimentacao mov = new Movimentacao(idMov,nomeAlocacao, date, numeroConta, valor);
             lista.add(mov);
         }
         try {
@@ -106,7 +114,37 @@ public class OracleMovimentacaoDao implements MovimentacaoDao {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-
         return lista;
     }
+
+    @Override
+    public Movimentacao buscarPorId(int id) throws SQLException, EntidadeNaoEcontradaException {
+
+
+        stm = conexao.prepareStatement("SELECT * FROM T_FIN_MOVIMENTACAO WHERE id_movimentacao = ?");
+        stm.setLong(1, id);
+        ResultSet result = stm.executeQuery();
+        if (!result.next())
+            throw new EntidadeNaoEcontradaException("Despesa não encontrada");
+        int idMov = result.getInt("id_movimentacao");
+        int idConta = result.getInt("id_conta");
+        int idAlocacao = result.getInt("id_alocacao");
+        double valor = result.getDouble("nr_valor_total");
+        String dataMov = result.getString("dt_movimentacao").split(" ")[0];
+        String tipoMov = result.getString("ds_tipo_mov");
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate date = LocalDate.parse(dataMov, formatter);
+
+        AlocacaoDao alocacaodao = DaoFactory.getAlocacaoDao();
+        Alocacao alocacao = alocacaodao.buscarId(idAlocacao);
+
+        ContaBancariaDao contabancariaDao = DaoFactory.getContaBancariaDao();
+        ContaBancaria contaBancaria = contabancariaDao.buscar(idConta);
+
+        return new Movimentacao(idMov, valor, date, tipoMov, contaBancaria, alocacao);
+
+    }
+
+
 }

@@ -12,4 +12,5 @@ public interface MovimentacaoDao {
     void alterar(Movimentacao movimentacao) throws SQLException;
     void excluir(Movimentacao movimentacao) throws SQLException, EntidadeNaoEcontradaException;
     List<Movimentacao> listarDespesas() throws SQLException;
+    Movimentacao buscarPorId(int id) throws SQLException, EntidadeNaoEcontradaException;
 }
