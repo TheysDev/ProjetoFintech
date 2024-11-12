@@ -49,7 +49,7 @@
             </a>
           </li>
           <li class="lista-sem-pontos mt-1">
-            <a href="#" class="link-custom ativado">
+            <a href="./investimentos.jsp" class="link-custom ativado">
               <h4>Investimentos</h4>
             </a>
           </li>
@@ -69,6 +69,7 @@
   </div>
   </div>
 </nav>
+
 <div class="offcanvas offcanvas-start show container card d-flex flex-column  align-items-center col-3 position-fixed start-0 sidebar-custom d-none d-xl-block scroll2"
      tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel" data-bs-backdrop="false" data-bs-scroll="true">
   <div class="d-flex justify-content-center">
