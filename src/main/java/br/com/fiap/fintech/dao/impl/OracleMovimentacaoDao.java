@@ -58,6 +58,7 @@ public class OracleMovimentacaoDao implements MovimentacaoDao {
         stm.setDate(4, Date.valueOf(movimentacao.getDataMovimentacao()));
         stm.setDate(5, Date.valueOf(movimentacao.getDataAtualizacaoMovimentacao()));
         stm.setString(6, movimentacao.getTipoMovimentacao());
+        stm.setInt(7, movimentacao.getIdMovimentacao());
         stm.executeUpdate();
 
         try {
@@ -107,11 +108,6 @@ public class OracleMovimentacaoDao implements MovimentacaoDao {
 
             Movimentacao mov = new Movimentacao(idMov,nomeAlocacao, date, numeroConta, valor);
             lista.add(mov);
-
-            for (int i = 0; i < lista.size(); i++) {
-                System.out.println("Índice " + i + ": " + lista.get(i));
-            }
-
 
         }
         try {

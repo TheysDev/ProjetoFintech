@@ -72,14 +72,7 @@
                             </div>
                             <div class="d-flex mt-auto gap-4">
                                 <button type="button" class="btn btn-limpar ">Limpar</button>
-                                <c:choose>
-                                    <c:when test="${not empty idMovimentacao}">
-                                        <button type="submit" class="btn btn-criar ">Editar</button>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <button type="submit" class="btn btn-criar ">Criar</button>
-                                    </c:otherwise>
-                                </c:choose>
+                                <button type="submit" class="btn btn-criar ">Criar</button>
                             </div>
                         </div>
                     </form>
@@ -113,11 +106,17 @@
                                         value="${d.valorMovimentacao}"/>
                                 </td>
                                 <td class="text-danger">
-                                    <c:url value="movimentacao" var="link">
-                                        <c:param name="acao" value="form-despesas-editar"/>
-                                        <c:param name="id" value="${d.idMovimentacao}"/>
-                                    </c:url>
-                                    <a href="${link}" class=" btn btn-primary">Editar</a>
+                                    <form action="movimentacao?acao=form-despesas-editar" method="get">
+                                        <input type="hidden" name="acao" value="form-despesas-editar">
+                                        <input type="hidden" name="id" value="${d.idMovimentacao}">
+                                        <input type="submit"  value="Editar" class="btn btn-primary">
+                                    </form>
+                                </td>
+                                <td>
+                                    <form action="movimentacao?acao=excluir" method="post">
+                                        <input type="hidden" name="id" value="${d.idMovimentacao}" class="btn btn-danger">
+                                        <input type="submit" name="excluir" value="Excluir" class="btn btn-danger">
+                                    </form>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -128,10 +127,7 @@
         </div>
     </div>
 </div>
-<div class="d-flex mt-auto gap-4">
-    <button type="button" class="btn btn-limpar fs-4 p-0"><i class="bi bi-arrow-left"></i></button>
-    <button type="button" class="btn btn-criar fs-4 p-0"><i class="bi bi-arrow-right"></i></button>
-</div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
