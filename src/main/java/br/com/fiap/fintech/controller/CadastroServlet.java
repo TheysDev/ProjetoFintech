@@ -38,8 +38,7 @@ public class CadastroServlet extends HttpServlet {
             String nome = req.getParameter("nome");
             String senha = req.getParameter("senha");
 
-            String statusString = req.getParameter("status");
-            boolean status = Boolean.parseBoolean(statusString);
+            String status = req.getParameter("status");
 
 
             String senhaCrip = CriptografiaUtils.criptografar(senha);

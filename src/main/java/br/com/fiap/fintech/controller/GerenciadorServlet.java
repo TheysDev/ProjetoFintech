@@ -22,7 +22,6 @@ public class GerenciadorServlet extends HttpServlet {
     private BancoDao bancoDao;
     private AlocacaoDao alocacaoDao;
     private AtivoDao ativoDao;
-    private UsuarioDao usuarioDao;
 
 
     @Override
@@ -33,7 +32,6 @@ public class GerenciadorServlet extends HttpServlet {
             bancoDao = DaoFactory.getBancoDao();
             contaBancariaDao = DaoFactory.getContaBancariaDao();
             ativoDao = DaoFactory.getAtivoDao();
-            usuarioDao = DaoFactory.getUsuarioDao();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -43,13 +41,13 @@ public class GerenciadorServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         try{
-//            HttpSession session = req.getSession();
-//
-//            Usuario usuario = (Usuario) session.getAttribute("usuario");
-//
-//            int idUsuarioLogado = usuario.getIdUsuario();
+            HttpSession session = req.getSession();
 
-            List<ContaBancaria> listaConta = contaBancariaDao.listar(1);
+            Usuario usuario = (Usuario) session.getAttribute("usuario");
+
+            int idUsuarioLogado = usuario.getIdUsuario();
+
+            List<ContaBancaria> listaConta = contaBancariaDao.listar(idUsuarioLogado);
             List<Alocacao> listaAlocacaoDespesa = alocacaoDao.listarAlocDespesa();
             List<Alocacao> listaAlocacaoReceita = alocacaoDao.listarAlocReceita();
             List<Alocacao> listaAlocacaoCompleta = new ArrayList<>();
@@ -72,15 +70,16 @@ public class GerenciadorServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("entro no post");
-        try{
-//            HttpSession session = req.getSession();
-//
-//            Usuario usuario = (Usuario) session.getAttribute("usuario");
-//
-//            int idUsuarioLogado = usuario.getIdUsuario();
 
-            List<ContaBancaria> listaConta = contaBancariaDao.listar(1);
+
+        try{
+            HttpSession session = req.getSession();
+
+            Usuario usuario = (Usuario) session.getAttribute("usuario");
+
+            int idUsuarioLogado = usuario.getIdUsuario();
+
+            List<ContaBancaria> listaConta = contaBancariaDao.listar(idUsuarioLogado);
             List<Alocacao> listaAlocacaoDespesa = alocacaoDao.listarAlocDespesa();
             List<Alocacao> listaAlocacaoReceita = alocacaoDao.listarAlocReceita();
             List<Alocacao> listaAlocacaoCompleta = new ArrayList<>();

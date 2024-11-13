@@ -8,9 +8,9 @@ public class Usuario {
     private String emailUsuario;
     private String nomeCompletoUsuario;
     private String senhaUsuario;
-    private boolean statusUsuario;
+    private String statusUsuario;
 
-    public Usuario(int idUsuario, String nomeUsuario, String cpfUsuario, String emailUsuario, String nomeCompletoUsuario, String senhaUsuario, boolean statusUsuario) {
+    public Usuario(int idUsuario, String nomeUsuario, String cpfUsuario, String emailUsuario, String nomeCompletoUsuario, String senhaUsuario, String statusUsuario) {
         this.idUsuario = idUsuario;
         this.nomeUsuario = nomeUsuario;
         this.cpfUsuario = cpfUsuario;
@@ -21,9 +21,15 @@ public class Usuario {
 
     }
 
+
     public Usuario(String emailUsuario,String senhaUsuario){
         this.emailUsuario = emailUsuario;
         this.senhaUsuario = senhaUsuario;
+    }
+
+    public Usuario(int idUsuario, String nomeUsuario) {
+        this.idUsuario = idUsuario;
+        this.nomeUsuario = nomeUsuario;
     }
 
     public Usuario(){}
@@ -72,11 +78,11 @@ public class Usuario {
         return senhaUsuario;
     }
 
-    public boolean isStatusUsuario() {
+    public String getStatusUsuario() {
         return statusUsuario;
     }
 
-    public void setStatusUsuario(boolean statusUsuario) {
+    public void setStatusUsuario(String statusUsuario) {
         this.statusUsuario = statusUsuario;
     }
 

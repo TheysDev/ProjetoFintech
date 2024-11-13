@@ -10,6 +10,6 @@ public interface ContaBancariaDao {
     void cadastrar(ContaBancaria conta) throws SQLException;
     void alterar(ContaBancaria conta) throws SQLException;
     void desativar(ContaBancaria conta) throws SQLException;
-    List<ContaBancaria> listar(int idUsuarioLogado) throws SQLException;
+    List<ContaBancaria> listar(int idUsuarioLogado) throws SQLException, EntidadeNaoEcontradaException;
     ContaBancaria buscar(int id) throws SQLException, EntidadeNaoEcontradaException;
 }

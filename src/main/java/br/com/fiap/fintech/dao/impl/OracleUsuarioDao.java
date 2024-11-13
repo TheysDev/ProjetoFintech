@@ -1,6 +1,7 @@
 package br.com.fiap.fintech.dao.impl;
 
 import br.com.fiap.fintech.dao.UsuarioDao;
+import br.com.fiap.fintech.exception.EntidadeNaoEcontradaException;
 import br.com.fiap.fintech.factory.ConnectionFactory;
 import br.com.fiap.fintech.model.Usuario;
 import br.com.fiap.fintech.util.CriptografiaUtils;
@@ -29,7 +30,7 @@ public class OracleUsuarioDao implements UsuarioDao {
         stm.setString(3, usuario.getEmailUsuario());
         stm.setString(4, usuario.getNomeCompletoUsuario());
         stm.setString(5, usuario.getSenhaUsuario());
-        stm.setString(6, String.valueOf(usuario.isStatusUsuario()));
+        stm.setString(6, String.valueOf(usuario.getStatusUsuario()));
         stm.executeUpdate();
     }
 
@@ -48,7 +49,7 @@ public class OracleUsuarioDao implements UsuarioDao {
     @Override
     public void desativar(Usuario usuario) throws SQLException {
         stm = conexao.prepareStatement("UPDATE T_FIN_USUARIO SET ds_status = ?");
-        stm.setString(1, String.valueOf(usuario.isStatusUsuario()));
+        stm.setString(1, String.valueOf(usuario.getStatusUsuario()));
         stm.executeUpdate();
 
 
@@ -77,5 +78,20 @@ public class OracleUsuarioDao implements UsuarioDao {
             ex.printStackTrace();
         }
         return false;
+    }
+
+    @Override
+    public Usuario buscarId(int id) throws SQLException, EntidadeNaoEcontradaException {
+        stm = conexao.prepareStatement("SELECT id_usuario, nm_usuario FROM T_FIN_USUARIO WHERE id_usuario = ?");
+        stm.setInt(1, id);
+        ResultSet result = stm.executeQuery();
+        if (!result.next())
+            throw new EntidadeNaoEcontradaException("Usuario não encontrado");
+
+        int idUsuario = result.getInt("id_usuario");
+        String nomeUsuario = result.getString("nm_usuario");
+
+
+        return new Usuario(idUsuario, nomeUsuario);
     }
 }

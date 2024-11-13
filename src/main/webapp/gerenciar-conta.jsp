@@ -50,8 +50,10 @@
                                        placeholder="260">
                             </div>
                             <div class="d-flex gap-2">
-                                <button type="submit" class="btn btn-sm btn-outline-primary btn-cadastro">Cadastrar</button>
-                                <button type="submit" class="btn btn-sm btn-outline-secondary btn-cadastro">Cancelar</button>
+                                <button type="submit" class="btn btn-sm btn-outline-primary btn-cadastro">Cadastrar
+                                </button>
+                                <button type="submit" class="btn btn-sm btn-outline-secondary btn-cadastro">Cancelar
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -61,37 +63,44 @@
                 </div>
                 <div>
                     <div class="d-flex flex-column gap-3 ">
-                        <form>
+                        <form action="contaBancaria?acao=cadastrar" method="post">
                             <div class="mt-3">
                                 <label for="numConta" class="form-label">
                                     <h6 class="negrito">Número da Conta:</h6>
                                 </label>
-                                <input type="text" class="form-control input-custom" id="numConta"
+                                <input type="text" name="numeroConta" class="form-control input-custom" id="numConta"
                                        placeholder="0000">
                             </div>
                             <div class="mt-3">
                                 <label for="numAgencia" class="form-label">
                                     <h6 class="negrito">Número da Agência:</h6>
                                 </label>
-                                <input type="text" class="form-control input-custom" id="numAgencia"
+                                <input type="text" name="numeroAgencia" class="form-control input-custom"
+                                       id="numAgencia"
                                        placeholder="1234">
                             </div>
                             <div class="mt-3 mb-2">
                                 <label for="saldoConta" class="form-label">
                                     <h6 class="negrito">Saldo da Conta:</h6>
                                 </label>
-                                <input type="text" class="form-control input-custom" id="saldoConta"
+                                <input type="text" name="saldoConta" class="form-control input-custom" id="saldoConta"
                                        placeholder="R$ 5.000,00">
                             </div>
+                            <div class="mt-3 ">
+                                <label for="numBancoRemover" class="form-label">
+                                    <h6 class="negrito">Número do Banco:</h6>
+                                </label>
+                                <input type="text" name="numeroBanco" class="form-control input-custom"
+                                       placeholder="260">
+                            </div>
+                            <input type="hidden" name="status" value="Ativo">
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-sm btn-outline-primary btn-cadastro">Cadastrar
+                                </button>
+                                <button type="submit" class="btn btn-sm btn-outline-secondary btn-cadastro">Cancelar
+                                </button>
+                            </div>
                         </form>
-                        <div class="d-flex gap-2">
-                            <button type="submit"
-                                    class="btn btn-sm btn-outline-primary btn-cadastro">Cadastrar
-                            </button>
-                            <button type="submit"
-                                    class="btn btn-sm btn-outline-secondary btn-cadastro">Cancelar
-                            </button>
-                        </div>
                     </div>
                 </div>
 
@@ -105,41 +114,62 @@
                                 <label for="numBancoRemover" class="form-label">
                                     <h6 class="negrito">Número do Banco:</h6>
                                 </label>
-                                <input type="text" name="numeroBanco" class="form-control input-custom" id="numBancoRemover" placeholder="260">
+                                <input type="text" name="numeroBanco" class="form-control input-custom"
+                                       id="numBancoRemover" placeholder="260">
                             </div>
                             <div class="d-flex gap-2">
-                                <button type="submit" class="btn btn-sm btn-outline-danger btn-cadastro">Remover</button>
-                                <button type="submit" class="btn btn-sm btn-outline-secondary btn-cadastro">Cancelar</button>
+                                <button type="submit" class="btn btn-sm btn-outline-danger btn-cadastro">Remover
+                                </button>
+                                <button type="submit" class="btn btn-sm btn-outline-secondary btn-cadastro">Cancelar
+                                </button>
                             </div>
                         </form>
                     </div>
                 </div>
                 <div class="text-center mt-5">
-                    <h5 class="text-danger">Remover Conta Bancária</h5>
+                    <h5 class="text-danger">Desativar Conta Bancária</h5>
+                </div>
+                <form action="contaBancaria?acao=desativar" method="post">
+                    <div class="mb-4">
+                        <div class=" mt-3 mb-4">
+                            <div class="btn-group d-flex align-items-center">
+                                <h6 class="negrito me-2">Conta:</h6>
+                                <select name="idContaDesativar" class="form-control">
+                                    <option value="" disabled selected>Selecione uma opção...</option>
+                                    <c:forEach items="${conta}" var="c">
+                                        <option value="${c.idConta}">${c.numeroConta} - ${c.nomeBanco}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-sm btn-outline-danger btn-cadastro">Desativar</button>
+                            <button type="submit" class="btn btn-sm btn-outline-secondary btn-cadastro">Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <div class="text-center mt-5">
+                    <h5 class="text-danger">Ativar Conta Bancária</h5>
                 </div>
                 <form>
                     <div class="mb-4">
                         <div class=" mt-3 mb-4">
                             <div class="btn-group d-flex align-items-center">
-
                                 <h6 class="negrito me-2">Conta:</h6>
-
-                                <form action="">
-                                    <select id="opcoes" name="opcoes">
-                                        <option value="" disabled selected>Selecione uma opção...</option>
-                                        <option value="opcao1">Nubanck</option>
-                                        <option value="opcao2">Itaú</option>
-                                        <option value="opcao3">Bradesco</option>
-                                    </select>
-                                </form>
+                                <select name="idContaAtivar" class="form-control">
+                                    <option value="" disabled selected>Selecione uma opção...</option>
+                                    <c:forEach items="${conta}" var="conta">
+                                        <c:if test="${conta.status == 'Inativa'}">
+                                            <option value="${conta.idConta}">${conta.numeroConta}</option>
+                                        </c:if>
+                                    </c:forEach>
+                                </select>
                             </div>
                         </div>
                         <div class="d-flex gap-2">
-                            <button type="submit"
-                                    class="btn btn-sm btn-outline-danger btn-cadastro">Remover
-                            </button>
-                            <button type="submit"
-                                    class="btn btn-sm btn-outline-secondary btn-cadastro">Cancelar
+                            <button type="submit" class="btn btn-sm btn-outline-danger btn-cadastro">Ativar</button>
+                            <button type="submit" class="btn btn-sm btn-outline-secondary btn-cadastro">Cancelar
                             </button>
                         </div>
                     </div>

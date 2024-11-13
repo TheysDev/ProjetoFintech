@@ -2,6 +2,7 @@ package br.com.fiap.fintech.dao.impl;
 
 import br.com.fiap.fintech.dao.BancoDao;
 import br.com.fiap.fintech.dao.ContaBancariaDao;
+import br.com.fiap.fintech.dao.UsuarioDao;
 import br.com.fiap.fintech.exception.EntidadeNaoEcontradaException;
 import br.com.fiap.fintech.factory.ConnectionFactory;
 import br.com.fiap.fintech.factory.DaoFactory;
@@ -30,18 +31,17 @@ public class OracleContaBancariaDao implements ContaBancariaDao {
     public void cadastrar(ContaBancaria conta) throws SQLException {
 
         stm = conexao.prepareStatement("INSERT INTO T_FIN_CONTA_BANCARIA (id_conta, nr_banco, id_usuario, nr_conta, nr_agencia, nr_saldo, ds_status_conta)" +
-                "VALUES (SQ_FIN_CONTA_BANCARIA.NEXTVAL, ?, ?, ?, ?, ?,)");
+                "VALUES (SQ_FIN_CONTA_BANCARIA.NEXTVAL, ?, ?, ?, ?, ?, ?)");
         stm.setString(1, conta.getNumeroBanco());
         stm.setInt(2, conta.getIdUsuario());
         stm.setString(3, conta.getNumeroConta());
         stm.setString(4, conta.getAgencia());
         stm.setDouble(5, conta.getSaldo());
-        stm.setString(6, String.valueOf(conta.isStatus()));
+        stm.setString(6, conta.getStatus());
         stm.executeUpdate();
 
         try {
             stm.close();
-            conexao.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -69,8 +69,8 @@ public class OracleContaBancariaDao implements ContaBancariaDao {
     @Override
     public void desativar(ContaBancaria conta) throws SQLException {
 
-        stm = conexao.prepareStatement("UPDATE T_FIN_CONTA_BANCARIA SET ds_status = ?");
-        stm.setString(1, String.valueOf(conta.isStatus()));
+        stm = conexao.prepareStatement("UPDATE T_FIN_CONTA_BANCARIA SET ds_status_conta = ?");
+        stm.setString(1, String.valueOf(conta.getStatus()));
         stm.executeUpdate();
 
         try {
@@ -81,13 +81,13 @@ public class OracleContaBancariaDao implements ContaBancariaDao {
     }
 
     @Override
-    public List<ContaBancaria> listar(int idUsuarioLogado) throws SQLException {
+    public List<ContaBancaria> listar(int idUsuarioLogado) throws SQLException, EntidadeNaoEcontradaException {
 
         List<ContaBancaria> lista = new ArrayList<>();
         ResultSet rs = null;
 
 
-        String sql = "SELECT T_FIN_CONTA_BANCARIA.id_conta, T_FIN_CONTA_BANCARIA.nr_conta, T_FIN_CONTA_BANCARIA.nr_agencia, T_FIN_CONTA_BANCARIA.nr_saldo, T_FIN_CONTA_BANCARIA.nr_banco, T_FIN_BANCO.nm_banco " +
+        String sql = "SELECT T_FIN_CONTA_BANCARIA.id_conta, T_FIN_CONTA_BANCARIA.nr_conta, T_FIN_CONTA_BANCARIA.nr_agencia, T_FIN_CONTA_BANCARIA.nr_saldo, T_FIN_CONTA_BANCARIA.nr_banco,T_FIN_CONTA_BANCARIA.ds_status_conta, T_FIN_BANCO.nm_banco " +
                 "FROM T_FIN_CONTA_BANCARIA " +
                 "INNER JOIN T_FIN_BANCO ON T_FIN_CONTA_BANCARIA.nr_banco = T_FIN_BANCO.nr_banco " +
                 "WHERE T_FIN_CONTA_BANCARIA.ds_status_conta = 'Ativo' AND T_FIN_CONTA_BANCARIA.id_usuario = ?";
@@ -102,9 +102,15 @@ public class OracleContaBancariaDao implements ContaBancariaDao {
             String agencia = rs.getString("nr_agencia");
             double saldo = rs.getDouble("nr_saldo");
             String numeroBanco = rs.getString("nr_banco");
-            String nomeBanco = rs.getString("nm_banco");
+            String status = rs.getString("ds_status_conta");
 
-            ContaBancaria conta = new ContaBancaria(idConta, numeroConta, agencia, saldo, numeroBanco, nomeBanco);
+            UsuarioDao usuarioDao = DaoFactory.getUsuarioDao();
+            BancoDao bancoDao = DaoFactory.getBancoDao();
+
+            Banco banco = bancoDao.buscarBanco(numeroBanco);
+            Usuario usuario = usuarioDao.buscarId(idUsuarioLogado);
+
+            ContaBancaria conta = new ContaBancaria(idConta, numeroConta, agencia, saldo, banco, usuario, status);
             lista.add(conta);
         }
         try {

@@ -8,12 +8,14 @@ import br.com.fiap.fintech.factory.DaoFactory;
 import br.com.fiap.fintech.model.Alocacao;
 import br.com.fiap.fintech.model.ContaBancaria;
 import br.com.fiap.fintech.model.Movimentacao;
+import br.com.fiap.fintech.model.Usuario;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -151,7 +153,7 @@ public class MovimentacaoServlet extends HttpServlet {
             case "form-receitas":
                 try {
                     listarDadosReceitas(req, resp);
-                } catch (SQLException e) {
+                } catch (SQLException | EntidadeNaoEcontradaException e) {
                     throw new RuntimeException(e);
                 }
                 break;
@@ -171,7 +173,7 @@ public class MovimentacaoServlet extends HttpServlet {
             case "form-despesas":
                 try {
                     listarDadosDespesas(req, resp);
-                } catch (SQLException e) {
+                } catch (SQLException | EntidadeNaoEcontradaException e) {
                     throw new RuntimeException(e);
                 }
             case "form-despesas-editar":
@@ -190,7 +192,7 @@ public class MovimentacaoServlet extends HttpServlet {
         }
     }
 
-    private void listarDadosReceitas(HttpServletRequest req, HttpServletResponse resp) throws SQLException {
+    private void listarDadosReceitas(HttpServletRequest req, HttpServletResponse resp) throws SQLException, EntidadeNaoEcontradaException {
 
         dadosUser(req, resp);
 
@@ -208,7 +210,7 @@ public class MovimentacaoServlet extends HttpServlet {
         }
     }
 
-    private void listarDadosDespesas(HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
+    private void listarDadosDespesas(HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException, EntidadeNaoEcontradaException {
 
 
         dadosUser(req, resp);
@@ -228,14 +230,15 @@ public class MovimentacaoServlet extends HttpServlet {
 
     }
 
-    private void dadosUser(HttpServletRequest req, HttpServletResponse resp) throws SQLException {
-//        HttpSession session = req.getSession();
-//
-//        Usuario usuario = (Usuario) session.getAttribute("usuario");
-//
-//        int idUsuarioLogado = usuario.getIdUsuario();
+    private void dadosUser(HttpServletRequest req, HttpServletResponse resp) throws SQLException, EntidadeNaoEcontradaException {
 
-        List<ContaBancaria> listaConta = contaBancDao.listar(1);
+        HttpSession session = req.getSession();
+
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
+
+        int idUsuarioLogado = usuario.getIdUsuario();
+
+        List<ContaBancaria> listaConta = contaBancDao.listar(idUsuarioLogado);
 
         req.setAttribute("conta", listaConta);
 
