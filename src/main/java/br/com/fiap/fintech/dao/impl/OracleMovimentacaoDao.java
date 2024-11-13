@@ -119,6 +119,41 @@ public class OracleMovimentacaoDao implements MovimentacaoDao {
         return lista;
     }
 
+
+    public List<Movimentacao> listarReceitas() throws SQLException {
+
+
+        List<Movimentacao> lista = new ArrayList<Movimentacao>();
+        ResultSet rs = null;
+
+        stm = conexao.prepareStatement("SELECT T_FIN_ALOCACAO.ds_alocacao, T_FIN_MOVIMENTACAO.dt_movimentacao, T_FIN_CONTA_BANCARIA.nr_conta, T_FIN_MOVIMENTACAO.nr_valor_total, T_FIN_MOVIMENTACAO.id_movimentacao " +
+                "FROM T_FIN_MOVIMENTACAO INNER JOIN T_FIN_ALOCACAO ON T_FIN_ALOCACAO.id_alocacao = T_FIN_MOVIMENTACAO.id_alocacao INNER JOIN T_FIN_CONTA_BANCARIA ON T_FIN_CONTA_BANCARIA.id_conta = T_FIN_MOVIMENTACAO.id_conta " +
+                "WHERE ds_tipo_mov = 'RECEITA'");
+        rs = stm.executeQuery();
+
+        while (rs.next()) {
+            String nomeAlocacao = rs.getString("ds_alocacao");
+            String dataMov = rs.getString("dt_movimentacao").split(" ")[0];
+            String numeroConta = rs.getString("nr_conta");
+            double valor = rs.getDouble("nr_valor_total");
+            int idMov = rs.getInt("id_movimentacao");
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate date = LocalDate.parse(dataMov, formatter);
+
+            Movimentacao mov = new Movimentacao(idMov,nomeAlocacao, date, numeroConta, valor);
+            lista.add(mov);
+
+        }
+        try {
+            stm.close();
+            rs.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return lista;
+    }
+
     @Override
     public Movimentacao buscarPorId(int id) throws SQLException, EntidadeNaoEcontradaException {
 

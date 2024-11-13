@@ -105,14 +105,14 @@ public class InvestimentoServlet extends HttpServlet {
 
     private void listarDadosDespesas(HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
 
-        //List<Alocacao> lista = alocDao.listar();
+        //List<Alocacao> lista = alocDao.listarAlocReceita();
 
         HttpSession session = req.getSession();
         Usuario usuario = (Usuario) session.getAttribute("usuario");
 
         int idUsuarioLogado = usuario.getIdUsuario();
 
-        //List<ContaBancaria> listaConta = contaBancDao.listar(idUsuarioLogado);
+        //List<ContaBancaria> listaConta = contaBancDao.listarAlocReceita(idUsuarioLogado);
         //List<Investimento> listarDespesas = investDao.listarDespesas();
 
         //req.setAttribute("alocacao", lista);

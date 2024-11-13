@@ -84,7 +84,7 @@
                     <table class="table table-hover text-center ">
                         <thead>
                         <tr>
-                            <th scope="col">Alocacao</th>
+                            <th scope="col">Alocação</th>
                             <th scope="col">Data</th>
                             <th scope="col">Numero Conta</th>
                             <th scope="col">Valor</th>

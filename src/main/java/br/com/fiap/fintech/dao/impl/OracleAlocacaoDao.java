@@ -22,13 +22,14 @@ public class OracleAlocacaoDao implements AlocacaoDao {
 
     @Override
     public void cadastrar(Alocacao alocacao) throws SQLException {
-        stm = conexao.prepareStatement("INSERT INTO T_FIN_ALOCACAO (id_alocacao, ds_alocacao) VALUES (SQ_FIN_ALOCACAO.NEXTVAL, ?)");
+        stm = conexao.prepareStatement("INSERT INTO T_FIN_ALOCACAO (id_alocacao, ds_alocacao, ds_tipo_alocacao) VALUES (SQ_FIN_ALOCACAO.NEXTVAL, ?, ?)");
         stm.setString(1, alocacao.getDescricaoAlocacao());
+        stm.setString(2, alocacao.getTipoAlocacao());
         stm.executeUpdate();
 
+        System.out.println("Salvo com sucesso!");
         try {
             stm.close();
-            conexao.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -40,11 +41,10 @@ public class OracleAlocacaoDao implements AlocacaoDao {
         stm.setString(1,alocacao.getDescricaoAlocacao());
         int linha = stm.executeUpdate();
         if (linha == 0) {
-            throw new EntidadeNaoEcontradaException("Cadastro não encontrado para ser removido");
+            throw new EntidadeNaoEcontradaException("Cadastro não encontrado para ser alterado");
         }
         try {
             stm.close();
-            conexao.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -77,7 +77,8 @@ public class OracleAlocacaoDao implements AlocacaoDao {
            if (rs.next()) {
                int idAlocacao = rs.getInt("id_alocacao");
                String descricaoAlocacao = rs.getString("ds_alocacao");
-               alocacao = new Alocacao(idAlocacao, descricaoAlocacao);
+               String tipo_alocacao = rs.getString("ds_tipo_alocacao");
+               alocacao = new Alocacao(idAlocacao, descricaoAlocacao,tipo_alocacao);
            }
             try {
             stm.close();
@@ -89,18 +90,43 @@ public class OracleAlocacaoDao implements AlocacaoDao {
     }
 
     @Override
-    public List<Alocacao> listar() throws SQLException {
+    public List<Alocacao> listarAlocReceita() throws SQLException {
 
         List<Alocacao> lista = new ArrayList<Alocacao>();
         ResultSet rs = null;
 
-        stm = conexao.prepareStatement("SELECT * FROM T_FIN_ALOCACAO");
+        stm = conexao.prepareStatement("SELECT * FROM T_FIN_ALOCACAO WHERE ds_tipo_alocacao = 'RECEITA'");
         rs = stm.executeQuery();
 
         while (rs.next()) {
             int id_alocacao = rs.getInt("id_alocacao");
             String ds_alocacao = rs.getString("ds_alocacao");
-            Alocacao alocacao = new Alocacao(id_alocacao, ds_alocacao);
+            String tipo_alocacao = rs.getString("ds_tipo_alocacao");
+            Alocacao alocacao = new Alocacao(id_alocacao, ds_alocacao, tipo_alocacao);
+            lista.add(alocacao);
+        }
+        try {
+            stm.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return lista;
+    }
+
+    @Override
+    public List<Alocacao> listarAlocDespesa() throws SQLException {
+
+        List<Alocacao> lista = new ArrayList<Alocacao>();
+        ResultSet rs = null;
+
+        stm = conexao.prepareStatement("SELECT * FROM T_FIN_ALOCACAO WHERE ds_tipo_alocacao = 'DESPESA'");
+        rs = stm.executeQuery();
+
+        while (rs.next()) {
+            int id_alocacao = rs.getInt("id_alocacao");
+            String ds_alocacao = rs.getString("ds_alocacao");
+            String tipo_alocacao = rs.getString("ds_tipo_alocacao");
+            Alocacao alocacao = new Alocacao(id_alocacao, ds_alocacao, tipo_alocacao);
             lista.add(alocacao);
         }
         try {

@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html>
 
@@ -30,9 +29,9 @@
             <div class="card card-custom align-items-center card-menor col-12 col-lg-4 scroll2">
 
                 <div class="text-center">
-                    <h5 class="cor-azul">Cadastrar Nova Receita</h5>
+                    <h5 class="cor-azul">Editar Receita</h5>
                 </div>
-                <form action="movimentacao?acao=cadastrarReceitas" method="post">
+                <form action="movimentacao?acao=editar" method="post">
                     <div>
                         <div class="d-flex flex-column gap-4 mt-4">
                             <div class="mt-2">
@@ -52,7 +51,6 @@
                                 <h6>Alocação</h6>
                                 <div class="btn-group">
                                     <select name="alocacao" id="id-alocacao" class="form-control">
-                                        <option value="0">Selecione</option>
                                         <c:forEach items="${alocacao}" var="c">
                                             <option value="${c.idAlocacao}">${c.descricaoAlocacao}</option>
                                         </c:forEach>
@@ -61,7 +59,6 @@
                                 <div class="d-flex flex-column mt-1 mb-4">
                                     <h6 class="negrito">Conta Bancária:</h6>
                                     <select name="conta" id="id-conta" class="form-control">
-                                        <option value="0">Selecione</option>
                                         <c:forEach items="${conta}" var="c">
                                             <option value="${c.idConta}">${c.numeroConta} - ${c.nomeBanco}</option>
                                         </c:forEach>
@@ -69,10 +66,11 @@
                                 </div>
                             </div>
                             <input type="hidden" name="tipoMov" value="RECEITA">
+                            <input type="hidden" name="idMov" value="${receita.idMovimentacao}">
                         </div>
                         <div class="d-flex mt-auto gap-4">
-                            <button type="submit" class="btn btn-limpar ">Limpar</button>
-                            <button type="submit" class="btn btn-criar ">Criar</button>
+                            <a href="movimentacao?acao=form-receitas" class="btn btn-limpar ">Cancelar</a>
+                            <button type="submit" class="btn btn-criar ">Editar</button>
                         </div>
                     </div>
                 </form>
@@ -94,7 +92,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach items="${receitas}" var="r">
+                        <c:forEach items="${listreceita}" var="r">
                             <tr>
                                 <td class="text-primary">${r.getDescricaoAlocacao()}</td>
                                 <td class="text-center">
@@ -108,8 +106,8 @@
                                         value="${r.valorMovimentacao}"/>
                                 </td>
                                 <td class="text-danger">
-                                    <form action="movimentacao?acao=form-receitas-editar" method="get">
-                                        <input type="hidden" name="acao" value="form-receitas-edita">
+                                    <form action="movimentacao?acao=editar" method="get">
+                                        <input type="hidden" name="acao" value="form-despesas-editar">
                                         <input type="hidden" name="id" value="${r.idMovimentacao}">
                                         <input type="submit" value="Editar" class="btn btn-primary">
                                     </form>

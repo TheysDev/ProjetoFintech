@@ -11,5 +11,12 @@
   <a href="movimentacao?acao=form-despesas" class="link-custom ativado">
       <h4>Despesas</h4>
   </a>
-</body>
+    <a href="movimentacao?acao=form-receitas" class="link-custom ativado">
+    <h4>Receitas</h4>
+    </a>
+
+  <a href="gerenciador" class="link-custom ativado">
+      <h4>Gerenciar</h4>
+  </a>
+ </body>
 </html>

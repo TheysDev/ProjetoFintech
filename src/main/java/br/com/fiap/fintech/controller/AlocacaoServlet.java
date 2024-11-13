@@ -52,32 +52,28 @@ public class AlocacaoServlet extends HttpServlet {
 
     private void excluir(HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
 
-        System.out.println("entrou na servlet certa");
-
         int id = Integer.parseInt(req.getParameter("idAlocacao"));
 
-        System.out.println("id do alocacao: " + id);
-
         Alocacao alocacao = dao.buscarId(id);
-        System.out.println(alocacao);
 
         dao.excluir(alocacao);
 
-        req.setAttribute("msg", "Excluido com sucesso");
-        req.getRequestDispatcher("movimentacao?acao=form-alocacao").forward(req, resp);
+        req.getRequestDispatcher("gerenciador").forward(req, resp);
     }
 
     private void cadastrar(HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
 
-        String descricao = req.getParameter("descricao");
 
-        Alocacao alocacao = new Alocacao(0, descricao);
+        String descricao = req.getParameter("descricao");
+        String tipoAlocacao = req.getParameter("tipoAlocacao");
+
+        Alocacao alocacao = new Alocacao(0, descricao, tipoAlocacao);
 
         dao.cadastrar(alocacao);
 
         req.setAttribute("alocacao", alocacao);
 
-        req.getRequestDispatcher("movimentacao?acao=form-alocacao").forward(req, resp);
+        req.getRequestDispatcher("gerenciador").forward(req, resp);
 
 
     }

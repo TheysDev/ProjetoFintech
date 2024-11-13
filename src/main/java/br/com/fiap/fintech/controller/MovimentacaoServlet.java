@@ -8,14 +8,12 @@ import br.com.fiap.fintech.factory.DaoFactory;
 import br.com.fiap.fintech.model.Alocacao;
 import br.com.fiap.fintech.model.ContaBancaria;
 import br.com.fiap.fintech.model.Movimentacao;
-import br.com.fiap.fintech.model.Usuario;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -44,28 +42,32 @@ public class MovimentacaoServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        
+
         String acao = req.getParameter("acao");
-        
+
         switch (acao) {
-            case "despesas":
+            case "cadastrarDespesas":
                 try {
-                    despesas(req, resp);
+                    cadastrarDespesas(req, resp);
                 } catch (SQLException | EntidadeNaoEcontradaException e) {
                     throw new RuntimeException(e);
                 }
                 break;
-            case "editar-despesas":
+            case "editar":
                 try {
-                    editarDespesas(req, resp);
+                    editar(req, resp);
                 } catch (SQLException | EntidadeNaoEcontradaException e) {
                     throw new RuntimeException(e);
                 }
 
-            case "receitas":
-                    receitas(req, resp);
-
+            case "cadastrarReceitas":
+                try {
+                    cadastrarReceitas(req, resp);
+                } catch (SQLException | EntidadeNaoEcontradaException e) {
+                    throw new RuntimeException(e);
+                }
                 break;
+
             case "excluir":
                 try {
                     excluirMov(req, resp);
@@ -75,10 +77,7 @@ public class MovimentacaoServlet extends HttpServlet {
         }
     }
 
-
-
     private void excluirMov(HttpServletRequest req, HttpServletResponse resp) throws SQLException, EntidadeNaoEcontradaException, ServletException, IOException {
-
 
         int id = Integer.parseInt(req.getParameter("id"));
 
@@ -89,12 +88,18 @@ public class MovimentacaoServlet extends HttpServlet {
         listarDadosDespesas(req, resp);
     }
 
-    private void receitas(HttpServletRequest req, HttpServletResponse resp) {
+    private void cadastrarReceitas(HttpServletRequest req, HttpServletResponse resp) throws SQLException, EntidadeNaoEcontradaException, ServletException, IOException {
+
+        Movimentacao movimentacao = dadosMov(req);
+
+        movDao.inserir(movimentacao);
+
+        listarDadosDespesas(req, resp);
     }
 
-    private void editarDespesas(HttpServletRequest req, HttpServletResponse resp) throws SQLException, EntidadeNaoEcontradaException, ServletException, IOException {
+    private void editar(HttpServletRequest req, HttpServletResponse resp) throws SQLException, EntidadeNaoEcontradaException, ServletException, IOException {
 
-        Movimentacao movimentacao = dadosDespesas(req);
+        Movimentacao movimentacao = dadosMov(req);
         movimentacao.setIdMovimentacao(Integer.parseInt(req.getParameter("idMov")));
 
         movDao.alterar(movimentacao);
@@ -103,9 +108,9 @@ public class MovimentacaoServlet extends HttpServlet {
 
     }
 
-    private void despesas(HttpServletRequest req, HttpServletResponse resp) throws SQLException, EntidadeNaoEcontradaException, ServletException, IOException {
+    private void cadastrarDespesas(HttpServletRequest req, HttpServletResponse resp) throws SQLException, EntidadeNaoEcontradaException, ServletException, IOException {
 
-        Movimentacao movimentacao = dadosDespesas(req);
+        Movimentacao movimentacao = dadosMov(req);
 
         movDao.inserir(movimentacao);
 
@@ -114,9 +119,9 @@ public class MovimentacaoServlet extends HttpServlet {
     }
 
     @NotNull
-    private Movimentacao dadosDespesas(HttpServletRequest req) throws SQLException, EntidadeNaoEcontradaException {
+    private Movimentacao dadosMov(HttpServletRequest req) throws SQLException, EntidadeNaoEcontradaException {
 
-        String valor = req.getParameter("valor").replace(',','.');
+        String valor = req.getParameter("valor").replace(',', '.');
         String dataDespesa = req.getParameter("dataDespesa");
         String idAlocacao = req.getParameter("alocacao");
         String idConta = req.getParameter("conta");
@@ -144,7 +149,24 @@ public class MovimentacaoServlet extends HttpServlet {
 
         switch (acao) {
             case "form-receitas":
-                listarDadosReceitas(req, resp);
+                try {
+                    listarDadosReceitas(req, resp);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                break;
+            case "form-receitas-editar":
+                int idReceita = Integer.parseInt(req.getParameter("id"));
+                try {
+                    Movimentacao movimentacao = movDao.buscarPorId(idReceita);
+                    List<Movimentacao> listar = movDao.listarReceitas();
+                    req.setAttribute("receita", movimentacao);
+                    req.setAttribute("listreceita", listar);
+                    dadosUser(req, resp);
+                    req.getRequestDispatcher("/editar-receitas.jsp").forward(req, resp);
+                } catch (SQLException | EntidadeNaoEcontradaException e) {
+                    throw new RuntimeException(e);
+                }
                 break;
             case "form-despesas":
                 try {
@@ -153,13 +175,13 @@ public class MovimentacaoServlet extends HttpServlet {
                     throw new RuntimeException(e);
                 }
             case "form-despesas-editar":
-                int id = Integer.parseInt(req.getParameter("id"));
+                int idDespesa = Integer.parseInt(req.getParameter("id"));
                 try {
-                    Movimentacao movimentacao = movDao.buscarPorId(id);
+                    Movimentacao movimentacao = movDao.buscarPorId(idDespesa);
                     List<Movimentacao> listar = movDao.listarDespesas();
                     req.setAttribute("despesa", movimentacao);
                     req.setAttribute("listdespesa", listar);
-                    dadosDespesa(req, resp);
+                    dadosUser(req, resp);
                     req.getRequestDispatcher("/editar-despesa.jsp").forward(req, resp);
                 } catch (SQLException | EntidadeNaoEcontradaException e) {
                     throw new RuntimeException(e);
@@ -168,15 +190,32 @@ public class MovimentacaoServlet extends HttpServlet {
         }
     }
 
-    private void listarDadosReceitas(HttpServletRequest req, HttpServletResponse resp) {
+    private void listarDadosReceitas(HttpServletRequest req, HttpServletResponse resp) throws SQLException {
+
+        dadosUser(req, resp);
+
+        List<Movimentacao> listarReceitas = movDao.listarReceitas();
+        List<Alocacao> lista = alocDao.listarAlocReceita();
+        req.setAttribute("alocacao", lista);
+        req.setAttribute("receitas", listarReceitas);
+
+        try {
+            req.getRequestDispatcher("receitas.jsp").forward(req, resp);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Erro durante o forward: " + e.getMessage());
+        }
     }
 
     private void listarDadosDespesas(HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
 
 
-        dadosDespesa(req,resp);
+        dadosUser(req, resp);
 
         List<Movimentacao> listarDespesas = movDao.listarDespesas();
+        List<Alocacao> lista = alocDao.listarAlocDespesa();
+        req.setAttribute("alocacao", lista);
         req.setAttribute("despesas", listarDespesas);
 
         try {
@@ -189,17 +228,15 @@ public class MovimentacaoServlet extends HttpServlet {
 
     }
 
-    private void dadosDespesa(HttpServletRequest req, HttpServletResponse resp) throws SQLException {
+    private void dadosUser(HttpServletRequest req, HttpServletResponse resp) throws SQLException {
 //        HttpSession session = req.getSession();
 //
 //        Usuario usuario = (Usuario) session.getAttribute("usuario");
 //
 //        int idUsuarioLogado = usuario.getIdUsuario();
 
-        List<Alocacao> lista = alocDao.listar();
         List<ContaBancaria> listaConta = contaBancDao.listar(1);
 
-        req.setAttribute("alocacao", lista);
         req.setAttribute("conta", listaConta);
 
     }

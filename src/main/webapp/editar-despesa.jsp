@@ -33,7 +33,7 @@
           <h5 class="cor-azul">Editar Despesa</h5>
         </div>
         <div>
-          <form action="movimentacao?acao=editar-despesas" method="post">
+          <form action="movimentacao?acao=editar" method="post">
             <div class="d-flex flex-column gap-4 mt-4">
               <div class="mt-2">
                 <label for="valorDespesa" class="form-label">
