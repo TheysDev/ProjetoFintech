@@ -14,7 +14,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -51,13 +50,32 @@ public class ContaBancariaServlet extends HttpServlet {
             case "editar":
                 editar(req, resp);
                 break;
-            case "desativar":
+            case "alterarStatus":
                 try {
                     desativar(req, resp);
                 } catch (SQLException | EntidadeNaoEcontradaException e) {
                     throw new RuntimeException(e);
                 }
+            case "ativar":
+                try {
+                    ativar(req, resp);
+                } catch (SQLException | EntidadeNaoEcontradaException e) {
+                    throw new RuntimeException(e);
+                }
         }
+    }
+
+    private void ativar(HttpServletRequest req, HttpServletResponse resp) throws SQLException, EntidadeNaoEcontradaException, ServletException, IOException {
+
+        int id = Integer.parseInt(req.getParameter("idContaAtivar"));
+
+        ContaBancaria contaBancaria= dao.buscar(id);
+        contaBancaria.setStatus("Ativo");
+
+        dao.alterarStatus(contaBancaria);
+        req.setAttribute("contaBancaria", contaBancaria);
+
+        req.getRequestDispatcher("gerenciador").forward(req, resp);
     }
 
     private void desativar(HttpServletRequest req, HttpServletResponse resp) throws SQLException, EntidadeNaoEcontradaException, ServletException, IOException {
@@ -67,7 +85,7 @@ public class ContaBancariaServlet extends HttpServlet {
         ContaBancaria contaBancaria= dao.buscar(id);
         contaBancaria.setStatus("Inativa");
 
-        dao.desativar(contaBancaria);
+        dao.alterarStatus(contaBancaria);
         req.setAttribute("contaBancaria", contaBancaria);
 
         req.getRequestDispatcher("gerenciador").forward(req, resp);

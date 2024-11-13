@@ -140,7 +140,6 @@ public class OracleMovimentacaoDao implements MovimentacaoDao {
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDate date = LocalDate.parse(dataMov, formatter);
-
             Movimentacao mov = new Movimentacao(idMov,nomeAlocacao, date, numeroConta, valor);
             lista.add(mov);
 

@@ -67,7 +67,7 @@ public class OracleContaBancariaDao implements ContaBancariaDao {
     }
 
     @Override
-    public void desativar(ContaBancaria conta) throws SQLException {
+    public void alterarStatus(ContaBancaria conta) throws SQLException {
 
         stm = conexao.prepareStatement("UPDATE T_FIN_CONTA_BANCARIA SET ds_status_conta = ?");
         stm.setString(1, String.valueOf(conta.getStatus()));
@@ -90,7 +90,7 @@ public class OracleContaBancariaDao implements ContaBancariaDao {
         String sql = "SELECT T_FIN_CONTA_BANCARIA.id_conta, T_FIN_CONTA_BANCARIA.nr_conta, T_FIN_CONTA_BANCARIA.nr_agencia, T_FIN_CONTA_BANCARIA.nr_saldo, T_FIN_CONTA_BANCARIA.nr_banco,T_FIN_CONTA_BANCARIA.ds_status_conta, T_FIN_BANCO.nm_banco " +
                 "FROM T_FIN_CONTA_BANCARIA " +
                 "INNER JOIN T_FIN_BANCO ON T_FIN_CONTA_BANCARIA.nr_banco = T_FIN_BANCO.nr_banco " +
-                "WHERE T_FIN_CONTA_BANCARIA.ds_status_conta = 'Ativo' AND T_FIN_CONTA_BANCARIA.id_usuario = ?";
+                "WHERE  T_FIN_CONTA_BANCARIA.id_usuario = ?";
 
         stm = conexao.prepareStatement(sql);
         stm.setInt(1, idUsuarioLogado);
@@ -110,8 +110,8 @@ public class OracleContaBancariaDao implements ContaBancariaDao {
             Banco banco = bancoDao.buscarBanco(numeroBanco);
             Usuario usuario = usuarioDao.buscarId(idUsuarioLogado);
 
-            ContaBancaria conta = new ContaBancaria(idConta, numeroConta, agencia, saldo, banco, usuario, status);
-            lista.add(conta);
+            ContaBancaria contaBancaria = new ContaBancaria(idConta, numeroConta, agencia, saldo, banco, usuario, status);
+            lista.add(contaBancaria);
         }
         try {
             stm.close();

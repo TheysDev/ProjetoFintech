@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt"%>
 <!DOCTYPE html>
 <html>
 
@@ -39,14 +40,13 @@
                                 <label for="valor" class="form-label">
                                     <h6 class="negrito">Valor:</h6>
                                 </label>
-                                <input type="text" class="form-control input-custom" id="valor"
-                                       placeholder="R$ 1.000,00">
+                                <input type="text" name="valor" class="form-control input-custom" id="valor"  placeholder="R$ 1.000,00">
                             </div>
                             <div class="mt-1">
                                 <label for="data" class="form-label">
                                     <h6 class="negrito">Data:</h6>
                                 </label>
-                                <input type="date" class="form-control input-custom" id="data">
+                                <input type="date" name="data" class="form-control input-custom" id="data">
                             </div>
                             <div class="d-flex flex-column mt-2 mb-4">
                                 <h6>Alocação</h6>
@@ -78,11 +78,8 @@
                 </form>
             </div>
             <div class="d-flex flex-column align-items-center card card-custom card-maior col-12 col-lg-8">
-
                 <h4 class="cor-azul">Histórico</h4>
-
                 <div class="scroll">
-
                     <table class="table table-hover text-center ">
                         <thead>
                         <tr>
@@ -103,13 +100,13 @@
                                     <fmt:formatDate value="${dataFmt}" pattern="dd/MM/yyyy"/>
                                 </td>
                                 <td>${r.getNumeroConta()}</td>
-                                <td class="text-danger">
+                                <td class="text-sucess">
                                     R$ <fmt:formatNumber
                                         value="${r.valorMovimentacao}"/>
                                 </td>
                                 <td class="text-danger">
                                     <form action="movimentacao?acao=form-receitas-editar" method="get">
-                                        <input type="hidden" name="acao" value="form-receitas-edita">
+                                        <input type="hidden" name="acao" value="form-receitas-editar">
                                         <input type="hidden" name="id" value="${r.idMovimentacao}">
                                         <input type="submit" value="Editar" class="btn btn-primary">
                                     </form>
@@ -129,11 +126,7 @@
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </div>
-
 </body>
-
 </html>

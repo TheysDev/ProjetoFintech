@@ -1,7 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,8 +39,7 @@
                                 <label for="valor" class="form-label">
                                     <h6 class="negrito">Valor:</h6>
                                 </label>
-                                <input type="text" class="form-control input-custom" id="valor"
-                                       placeholder="R$ 1.000,00">
+                                <input type="text"  class="form-control input-custom" id="valor"  placeholder="R$ 1.000,00">
                             </div>
                             <div class="mt-1">
                                 <label for="data" class="form-label">

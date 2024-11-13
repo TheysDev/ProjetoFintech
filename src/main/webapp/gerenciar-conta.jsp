@@ -134,12 +134,16 @@
                         <div class=" mt-3 mb-4">
                             <div class="btn-group d-flex align-items-center">
                                 <h6 class="negrito me-2">Conta:</h6>
-                                <select name="idContaDesativar" class="form-control">
-                                    <option value="" disabled selected>Selecione uma opção...</option>
-                                    <c:forEach items="${conta}" var="c">
-                                        <option value="${c.idConta}">${c.numeroConta} - ${c.nomeBanco}</option>
-                                    </c:forEach>
-                                </select>
+                                <label>
+                                    <select name="idContaDesativar" class="form-control">
+                                        <option value="" disabled selected>Selecione uma opção...</option>
+                                        <c:forEach items="${conta}" var="c">
+                                            <c:if test="${c.status == 'Ativo'}">
+                                                <option value="${c.idConta}">${c.numeroConta} - ${c.nomeBanco}</option>
+                                            </c:if>
+                                        </c:forEach>
+                                    </select>
+                                </label>
                             </div>
                         </div>
                         <div class="d-flex gap-2">
@@ -152,19 +156,22 @@
                 <div class="text-center mt-5">
                     <h5 class="text-danger">Ativar Conta Bancária</h5>
                 </div>
-                <form>
+                <form action="contaBancaria?acao=ativar" method="post">
                     <div class="mb-4">
                         <div class=" mt-3 mb-4">
                             <div class="btn-group d-flex align-items-center">
                                 <h6 class="negrito me-2">Conta:</h6>
-                                <select name="idContaAtivar" class="form-control">
-                                    <option value="" disabled selected>Selecione uma opção...</option>
-                                    <c:forEach items="${conta}" var="conta">
-                                        <c:if test="${conta.status == 'Inativa'}">
-                                            <option value="${conta.idConta}">${conta.numeroConta}</option>
-                                        </c:if>
-                                    </c:forEach>
-                                </select>
+                                <label>
+                                    <select name="idContaAtivar" class="form-control">
+                                        <option value="" disabled selected>Selecione uma opção...</option>
+                                        <c:forEach items="${conta}" var="conta">
+                                            <c:if test="${conta.status == 'Inativa'}">
+                                                <option value="${conta.idConta}">${conta.numeroConta}
+                                                    - ${conta.nomeBanco}</option>
+                                            </c:if>
+                                        </c:forEach>
+                                    </select>
+                                </label>
                             </div>
                         </div>
                         <div class="d-flex gap-2">
@@ -174,8 +181,6 @@
                         </div>
                     </div>
                 </form>
-
-
             </div>
             <div class="card card-custom align-items-center col-12 col-lg-4 scroll2">
 
@@ -237,13 +242,13 @@
                         </form>
                     </div>
                 </div>
+
                 <div class="text-center mt-5 mb-2">
                     <h5 class="text-success">Editar Ativo</h5>
                 </div>
                 <div>
                     <div class="d-flex flex-column gap-3">
                         <form>
-
                             <div class="d-flex flex-column mt-1 mb-4">
                                 <div class="btn-group d-flex align-items-center">
 
@@ -256,7 +261,6 @@
                                     </form>
                                 </div>
                             </div>
-
                             <div class="mt-3">
                                 <label for="editarAtivo" class="form-label">
                                     <h6 class="negrito">Nome:</h6>
@@ -268,8 +272,7 @@
                                 <label for="numDescricaoAtivo" class="form-label">
                                     <h6 class="negrito">Descrição:</h6>
                                 </label>
-                                <input type="text" class="form-control input-custom" id="numDescricaoAtivo"
-                                       placeholder="Ação">
+                                <input type="text" class="form-control input-custom" placeholder="Ação">
                             </div>
                         </form>
                         <div class="d-flex gap-2">
@@ -291,12 +294,14 @@
                         <div class="d-flex flex-column mt-1 mb-4">
                             <div class="btn-group d-flex align-items-center">
                                 <h6 class="negrito me-2">Alocação:</h6>
-                                <select name="idAlocacao" class="form-control">
-                                    <option value="" disabled selected>Selecione uma opção...</option>
-                                    <c:forEach items="${alocacao}" var="a">
-                                        <option value="${a.idAlocacao}">${a.descricaoAlocacao}</option>
-                                    </c:forEach>
-                                </select>
+                                <label>
+                                    <select name="idAlocacao" class="form-control">
+                                        <option value="" disabled selected>Selecione uma opção...</option>
+                                        <c:forEach items="${alocacao}" var="a">
+                                            <option value="${a.idAlocacao}">${a.descricaoAlocacao}</option>
+                                        </c:forEach>
+                                    </select>
+                                </label>
                             </div>
                         </div>
                         <div class="d-flex gap-2">
@@ -306,10 +311,8 @@
                         </div>
                     </div>
                 </form>
-
             </div>
             <div class="card card-custom align-items-center col-12 col-lg-4 scroll2">
-
                 <div class="text-center">
                     <h5 class="text-success">Editar Login</h5>
                 </div>
@@ -371,14 +374,10 @@
                 </div>
             </div>
         </div>
-
     </div>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
             crossorigin="anonymous"></script>
 </div>
-
 </body>
-
 </html>

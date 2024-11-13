@@ -17,7 +17,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.jetbrains.annotations.NotNull;
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -55,9 +54,16 @@ public class MovimentacaoServlet extends HttpServlet {
                     throw new RuntimeException(e);
                 }
                 break;
-            case "editar":
+            case "editar-despesa":
                 try {
-                    editar(req, resp);
+                    editarDespesa(req, resp);
+                } catch (SQLException | EntidadeNaoEcontradaException e) {
+                    throw new RuntimeException(e);
+                }
+                break;
+            case "editar-receita":
+                try {
+                    editarReceita(req, resp);
                 } catch (SQLException | EntidadeNaoEcontradaException e) {
                     throw new RuntimeException(e);
                 }
@@ -96,10 +102,21 @@ public class MovimentacaoServlet extends HttpServlet {
 
         movDao.inserir(movimentacao);
 
-        listarDadosDespesas(req, resp);
+        listarDadosReceitas(req, resp);
     }
 
-    private void editar(HttpServletRequest req, HttpServletResponse resp) throws SQLException, EntidadeNaoEcontradaException, ServletException, IOException {
+    private void editarReceita(HttpServletRequest req, HttpServletResponse resp) throws SQLException, EntidadeNaoEcontradaException, ServletException, IOException {
+
+        Movimentacao movimentacao = dadosMov(req);
+        movimentacao.setIdMovimentacao(Integer.parseInt(req.getParameter("idMov")));
+
+        movDao.alterar(movimentacao);
+
+        listarDadosReceitas(req, resp);
+
+    }
+
+    private void editarDespesa(HttpServletRequest req, HttpServletResponse resp) throws SQLException, EntidadeNaoEcontradaException, ServletException, IOException {
 
         Movimentacao movimentacao = dadosMov(req);
         movimentacao.setIdMovimentacao(Integer.parseInt(req.getParameter("idMov")));
@@ -124,13 +141,13 @@ public class MovimentacaoServlet extends HttpServlet {
     private Movimentacao dadosMov(HttpServletRequest req) throws SQLException, EntidadeNaoEcontradaException {
 
         String valor = req.getParameter("valor").replace(',', '.');
-        String dataDespesa = req.getParameter("dataDespesa");
+        String data = req.getParameter("data");
         String idAlocacao = req.getParameter("alocacao");
         String idConta = req.getParameter("conta");
         String tipoMov = req.getParameter("tipoMov");
 
         double valorDespesa = Double.parseDouble(valor);
-        LocalDate dataDespesaLocalDate = LocalDate.parse(dataDespesa);
+        LocalDate dataDespesaLocalDate = LocalDate.parse(data);
 
         int id = Integer.parseInt(idConta);
 
@@ -211,7 +228,6 @@ public class MovimentacaoServlet extends HttpServlet {
     }
 
     private void listarDadosDespesas(HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException, EntidadeNaoEcontradaException {
-
 
         dadosUser(req, resp);
 
