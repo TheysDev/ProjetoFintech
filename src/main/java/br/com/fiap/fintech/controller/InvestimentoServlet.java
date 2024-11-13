@@ -91,7 +91,7 @@ public class InvestimentoServlet extends HttpServlet {
             case "form-receitas":
                 listarDadosReceitas(req, resp);
                 break;
-            case "form-despesas":
+            case "form-investi":
                 try {
                     listarDadosDespesas(req, resp);
                 } catch (SQLException e) {

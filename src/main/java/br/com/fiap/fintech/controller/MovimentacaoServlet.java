@@ -16,6 +16,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.jetbrains.annotations.NotNull;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -53,23 +55,31 @@ public class MovimentacaoServlet extends HttpServlet {
                     throw new RuntimeException(e);
                 }
                 break;
+            case "editar-despesas":
+                try {
+                    editarDespesas(req, resp);
+                } catch (SQLException | EntidadeNaoEcontradaException e) {
+                    throw new RuntimeException(e);
+                }
+
             case "receitas":
-                receitas(req, resp);
+                    receitas(req, resp);
+
                 break;
             case "excluir":
                 try {
                     excluirMov(req, resp);
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                } catch (EntidadeNaoEcontradaException e) {
+                } catch (SQLException | EntidadeNaoEcontradaException e) {
                     throw new RuntimeException(e);
                 }
         }
     }
 
+
+
     private void excluirMov(HttpServletRequest req, HttpServletResponse resp) throws SQLException, EntidadeNaoEcontradaException, ServletException, IOException {
 
-        System.out.println("metodo exluir entrie");
+        System.out.println("metodo exluir entre");
         int id = Integer.parseInt(req.getParameter("idMov"));
 
         Movimentacao movimentacao = movDao.buscarPorId(id);
@@ -82,7 +92,28 @@ public class MovimentacaoServlet extends HttpServlet {
     private void receitas(HttpServletRequest req, HttpServletResponse resp) {
     }
 
+    private void editarDespesas(HttpServletRequest req, HttpServletResponse resp) throws SQLException, EntidadeNaoEcontradaException, ServletException, IOException {
+
+        Movimentacao movimentacao = dadosDespesas(req);
+
+        movDao.alterar(movimentacao);
+
+        listarDadosDespesas(req, resp);
+
+    }
+
     private void despesas(HttpServletRequest req, HttpServletResponse resp) throws SQLException, EntidadeNaoEcontradaException, ServletException, IOException {
+
+        Movimentacao movimentacao = dadosDespesas(req);
+
+        movDao.inserir(movimentacao);
+
+        listarDadosDespesas(req, resp);
+
+    }
+
+    @NotNull
+    private Movimentacao dadosDespesas(HttpServletRequest req) throws SQLException, EntidadeNaoEcontradaException {
 
         String valor = req.getParameter("valor").replace(',','.');
         String dataDespesa = req.getParameter("dataDespesa");
@@ -101,12 +132,7 @@ public class MovimentacaoServlet extends HttpServlet {
 
         Alocacao alocacao = alocDao.buscarId(idIntAlocacao);
 
-        Movimentacao movimentacao = new Movimentacao(0, valorDespesa, dataDespesaLocalDate, tipoMov, contaBancaria, alocacao);
-
-        movDao.inserir(movimentacao);
-
-        listarDadosDespesas(req, resp);
-
+        return new Movimentacao(0, valorDespesa, dataDespesaLocalDate, tipoMov, contaBancaria, alocacao);
     }
 
 
@@ -130,7 +156,7 @@ public class MovimentacaoServlet extends HttpServlet {
                 try {
                     Movimentacao movimentacao = movDao.buscarPorId(id);
                     req.setAttribute("despesa", movimentacao);
-                    req.getRequestDispatcher("despesas.jsp").forward(req, resp);
+                    listarDadosDespesas(req, resp);
                 } catch (SQLException | EntidadeNaoEcontradaException e) {
                     throw new RuntimeException(e);
                 }
@@ -144,15 +170,15 @@ public class MovimentacaoServlet extends HttpServlet {
     private void listarDadosDespesas(HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
 
         System.out.println("Iniciando listarDadosDespesas");
-
-        HttpSession session = req.getSession();
-        Usuario usuario = (Usuario) session.getAttribute("usuario");
-
-        int idUsuarioLogado = usuario.getIdUsuario();
+//        HttpSession session = req.getSession();
+//
+//        Usuario usuario = (Usuario) session.getAttribute("usuario");
+//
+//        int idUsuarioLogado = usuario.getIdUsuario();
 
         List<Alocacao> lista = alocDao.listar();
 
-        List<ContaBancaria> listaConta = contaBancDao.listar(idUsuarioLogado);
+        List<ContaBancaria> listaConta = contaBancDao.listar(1);
 
         List<Movimentacao> listarDespesas = movDao.listarDespesas();
 
@@ -160,13 +186,16 @@ public class MovimentacaoServlet extends HttpServlet {
         req.setAttribute("conta", listaConta);
         req.setAttribute("despesas", listarDespesas);
 
+        System.out.println("bugou");
+
         try {
-            req.getRequestDispatcher("/despesas.jsp").forward(req, resp);
+            req.getRequestDispatcher("despesas.jsp").forward(req, resp);
+
+            System.out.println("finalizado");
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Erro durante o forward: " + e.getMessage());
         }
-
 
     }
 }

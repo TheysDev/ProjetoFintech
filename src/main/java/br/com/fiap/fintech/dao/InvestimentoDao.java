@@ -1,7 +1,7 @@
 package br.com.fiap.fintech.dao;
 
 import br.com.fiap.fintech.exception.EntidadeNaoEcontradaException;
-import br.com.fiap.fintech.model.Movimentacao;
+import br.com.fiap.fintech.model.Investimento;
 import java.sql.SQLException;
 import java.util.List;
 

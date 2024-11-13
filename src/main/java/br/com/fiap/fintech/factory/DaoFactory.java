@@ -32,6 +32,7 @@ public class DaoFactory {
         return new OracleContaBancariaDao();
     }
 
+
     public static InvestimentoDao getInvestimentoDao() throws SQLException {
         return new OracleInvestimentoDao();
     }

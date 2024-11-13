@@ -39,15 +39,13 @@
                                 <label for="valorDespesa" class="form-label">
                                     <h6>Valor:</h6>
                                 </label>
-                                <input type="text" name="valor" class="form-control input-custom" id="valorDespesa"
-                                       placeholder="R$ 1.000,00">
+                                <input type="text" name="valor" class="form-control input-custom" id="valorDespesa" placeholder="R$ 1.000,00">
                             </div>
                             <div class="mt-2 ">
                                 <label for="dataDespesa" class="form-label">
                                     <h6>Data:</h6>
                                 </label>
-                                <input type="date" name="dataDespesa" class="form-control input-custom"
-                                       id="dataDespesa">
+                                <input type="date" name="dataDespesa" class="form-control input-custom" id="dataDespesa">
                             </div>
                             <div class="d-flex flex-column mt-2 mb-4">
                                 <h6>Alocação</h6>
@@ -74,7 +72,14 @@
                             </div>
                             <div class="d-flex mt-auto gap-4">
                                 <button type="button" class="btn btn-limpar ">Limpar</button>
-                                <button type="submit" class="btn btn-criar ">Criar</button>
+                                <c:choose>
+                                    <c:when test="${not empty idMovimentacao}">
+                                        <button type="submit" class="btn btn-criar ">Editar</button>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <button type="submit" class="btn btn-criar ">Criar</button>
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
                         </div>
                     </form>

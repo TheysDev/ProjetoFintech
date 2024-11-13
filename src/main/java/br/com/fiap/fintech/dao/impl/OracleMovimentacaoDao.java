@@ -107,6 +107,12 @@ public class OracleMovimentacaoDao implements MovimentacaoDao {
 
             Movimentacao mov = new Movimentacao(idMov,nomeAlocacao, date, numeroConta, valor);
             lista.add(mov);
+
+            for (int i = 0; i < lista.size(); i++) {
+                System.out.println("Índice " + i + ": " + lista.get(i));
+            }
+
+
         }
         try {
             stm.close();

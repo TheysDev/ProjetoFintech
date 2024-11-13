@@ -108,4 +108,17 @@ public class Movimentacao {
         String nomeAlocacao = alocacao.getDescricaoAlocacao();
         return nomeAlocacao;
     }
+
+    public String toString() {
+        return "Movimentacao{" +
+                "idMovimentacao=" + idMovimentacao +
+                ", valorMovimentacao=" + valorMovimentacao +
+                ", dataMovimentacao=" + dataMovimentacao +
+                ", tipoMovimentacao='" + tipoMovimentacao + '\'' +
+                ", dataCriacaoMovimentacao=" + dataCriacaoMovimentacao +
+                ", dataAtualizacaoMovimentacao=" + dataAtualizacaoMovimentacao +
+                ", contaBancaria=" + (contaBancaria != null ? contaBancaria.getIdConta() : "null") +
+                ", alocacao=" + (alocacao != null ? alocacao.getIdAlocacao() : "null") +
+                '}';
+    }
 }
