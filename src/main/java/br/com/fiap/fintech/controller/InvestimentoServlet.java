@@ -1,14 +1,12 @@
 package br.com.fiap.fintech.controller;
 
 import br.com.fiap.fintech.dao.AlocacaoDao;
+import br.com.fiap.fintech.dao.AtivoDao;
 import br.com.fiap.fintech.dao.ContaBancariaDao;
 import br.com.fiap.fintech.dao.InvestimentoDao;
 import br.com.fiap.fintech.exception.EntidadeNaoEcontradaException;
 import br.com.fiap.fintech.factory.DaoFactory;
-import br.com.fiap.fintech.model.Alocacao;
-import br.com.fiap.fintech.model.ContaBancaria;
-import br.com.fiap.fintech.model.Investimento;
-import br.com.fiap.fintech.model.Usuario;
+import br.com.fiap.fintech.model.*;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -16,7 +14,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -26,12 +23,14 @@ import java.util.List;
 public class InvestimentoServlet extends HttpServlet {
 
     private InvestimentoDao investDao;
+    private AtivoDao ativoDao;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         try {
             investDao = DaoFactory.getInvestimentoDao();
+            ativoDao = DaoFactory.getAtivoDao();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -43,42 +42,37 @@ public class InvestimentoServlet extends HttpServlet {
         String acao = req.getParameter("acao");
 
         switch (acao) {
-            case "cadastrarDespesas":
+            case "cadastrar":
                 try {
-                    cadastrarDespesas(req, resp);
+                    cadastrar(req, resp);
                 } catch (SQLException | EntidadeNaoEcontradaException e) {
                     throw new RuntimeException(e);
                 }
                 break;
-            case "editarDespesas":
-                editarDespesas(req, resp);
+            case "editar":
+                editar(req, resp);
                 break;
         }
     }
 
-    private void editarDespesas(HttpServletRequest req, HttpServletResponse resp) {
+    private void editar(HttpServletRequest req, HttpServletResponse resp) {
     }
 
-    private void cadastrarDespesas(HttpServletRequest req, HttpServletResponse resp) throws SQLException, EntidadeNaoEcontradaException, ServletException, IOException {
 
-        String valor = req.getParameter("valor").replace(',','.');
-        String dataDespesa = req.getParameter("dataDespesa");
-        String idAlocacao = req.getParameter("alocacao");
-        String idConta = req.getParameter("conta");
-        String tipoMov = req.getParameter("tipoMov");
+    private void cadastrar(HttpServletRequest req, HttpServletResponse resp) throws SQLException, EntidadeNaoEcontradaException, ServletException, IOException {
 
-        double valorDespesa = Double.parseDouble(valor);
-        LocalDate dataDespesaLocalDate = LocalDate.parse(dataDespesa);
+        double valor = Double.parseDouble(req.getParameter("valor").replace(',','.'));
+        LocalDate data = LocalDate.parse(req.getParameter("data"));
+        String tipoInvest = req.getParameter("tipoInvest");
+        int idAtivo = Integer.parseInt(req.getParameter("ativo"));
 
-        int id = Integer.parseInt(idConta);
+        Ativo ativo = ativoDao.buscar(idAtivo);
 
-        int idIntAlocacao = Integer.parseInt(idAlocacao);
+        Investimento investimento = new Investimento(0, valor, data, tipoInvest, ativo);
+        investDao.cadastrar(investimento);
 
-        //Investimento investimento = new Investimento(0, valorDespesa, dataDespesaLocalDate, tipoMov, contaBancaria, alocacao);
-
-        //movDao.inserir(investimento);
-
-        listarDadosDespesas(req, resp);
+        req.setAttribute("investimento", investimento);
+        listar(req, resp);
 
     }
 
@@ -88,37 +82,23 @@ public class InvestimentoServlet extends HttpServlet {
         String acao = req.getParameter("acao");
 
         switch (acao) {
-            case "form-receitas":
-                listarDadosReceitas(req, resp);
-                break;
-            case "form-investi":
+            case "form-investimento":
                 try {
-                    listarDadosDespesas(req, resp);
-                } catch (SQLException e) {
+                    listar(req, resp);
+                } catch (SQLException | EntidadeNaoEcontradaException e) {
                     throw new RuntimeException(e);
                 }
         }
     }
 
-    private void listarDadosReceitas(HttpServletRequest req, HttpServletResponse resp) {
-    }
+    private void listar(HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException, EntidadeNaoEcontradaException {
 
-    private void listarDadosDespesas(HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
+        List<Ativo> listaAtivo = ativoDao.listar();
+        List<Investimento> listaInvest = investDao.listarInvestimentos();
 
-        //List<Alocacao> lista = alocDao.listarAlocReceita();
-
-        HttpSession session = req.getSession();
-        Usuario usuario = (Usuario) session.getAttribute("usuario");
-
-        int idUsuarioLogado = usuario.getIdUsuario();
-
-        //List<ContaBancaria> listaConta = contaBancDao.listarAlocReceita(idUsuarioLogado);
-        //List<Investimento> listarDespesas = investDao.listarDespesas();
-
-        //req.setAttribute("alocacao", lista);
-        //req.setAttribute("conta", listaConta);
-        //req.setAttribute("despesas", listarDespesas);
-        req.getRequestDispatcher("/despesas.jsp").forward(req, resp);
+        req.setAttribute("invest", listaInvest);
+        req.setAttribute("ativo", listaAtivo);
+        req.getRequestDispatcher("/investimentos.jsp").forward(req, resp);
 
     }
 }

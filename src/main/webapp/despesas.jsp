@@ -110,7 +110,7 @@
                     <h5 class="cor-azul">Cadastrar Nova Despesa</h5>
                 </div>
                 <div>
-                    <form action="movimentacao?acao=despesas" method="post">
+                    <form action="movimentacao?acao=cadastrarDespesas" method="post">
                         <div class="d-flex flex-column gap-4 mt-4">
                             <div class="mt-2">
                                 <label for="valorDespesa" class="form-label">

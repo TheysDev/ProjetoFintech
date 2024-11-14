@@ -15,6 +15,10 @@
     <h4>Receitas</h4>
     </a>
 
+  <a href="investimento?acao=form-investimento" class="link-custom ativado">
+      <h4>Investimentos</h4>
+  </a>
+
   <a href="gerenciador" class="link-custom ativado">
       <h4>Gerenciar</h4>
   </a>

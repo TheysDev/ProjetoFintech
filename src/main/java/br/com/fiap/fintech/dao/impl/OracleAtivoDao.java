@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class OracleAtivoDao implements AtivoDao {
@@ -49,19 +50,36 @@ public class OracleAtivoDao implements AtivoDao {
 
     @Override
     public Ativo buscar(int id) throws SQLException, EntidadeNaoEcontradaException {
+
         stm = conexao.prepareStatement("SELECT * FROM T_FIN_ATIVO WHERE id_ativo = ?");
         stm.setInt(1, id);
         ResultSet result = stm.executeQuery();
         if (!result.next())
             throw new EntidadeNaoEcontradaException("Ativo não encontrado");
-        String idAtivo = result.getString("nr_banco");
-        String tipoAtivo = result.getString("nm_banco");
-        return new Ativo(id, idAtivo, tipoAtivo);
+        int idAtivo = Integer.parseInt(result.getString("id_ativo"));
+        String nomeAtivo = result.getString("nm_ativo");
+        String tipoAtivo = result.getString("ds_tipo_ativo");
+        return new Ativo(idAtivo, nomeAtivo, tipoAtivo);
     }
 
     @Override
-    public List<Ativo> listar() {
-        return List.of();
+    public List<Ativo> listar() throws SQLException {
+
+        List<Ativo> lista = new ArrayList<Ativo>();
+        ResultSet rs = null;
+
+        stm = conexao.prepareStatement("SELECT * FROM T_FIN_ATIVO");
+        rs = stm.executeQuery();
+
+        while (rs.next()) {
+            int idAtivo = rs.getInt("id_ativo");
+            String nomeAtivo = rs.getString("nm_ativo");
+            String tipoAtivo = rs.getString("ds_tipo_ativo");
+
+            Ativo ativo = new Ativo(idAtivo, nomeAtivo, tipoAtivo);
+            lista.add(ativo);
+        }
+        return lista;
     }
 
 }

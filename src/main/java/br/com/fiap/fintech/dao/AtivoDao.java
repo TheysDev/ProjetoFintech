@@ -12,5 +12,5 @@ public interface AtivoDao {
     void alterar(Ativo ativo) throws SQLException;
     void excluir(Ativo ativo) throws SQLException, EntidadeNaoEcontradaException;
     Ativo buscar(int id) throws SQLException, EntidadeNaoEcontradaException;
-    List<Ativo> listar();
+    List<Ativo> listar() throws SQLException;
 }

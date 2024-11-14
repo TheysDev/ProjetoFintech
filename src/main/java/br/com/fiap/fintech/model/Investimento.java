@@ -4,66 +4,38 @@ import java.time.LocalDate;
 
 public class Investimento {
 
-    private int idTransacao;
-    private int idMovBanc;
-    private int idMovCart;
-    private double nrQuantidade;
-    private double nrValorUnit;
+    private int idInvest;
+    private double valorInvest;
     private LocalDate dtCriadoEm;
     private LocalDate dtAtualizadoEm;
-    private int idAtivo;
+    private String tipoInvest;
 
-    public Investimento(int idTransacao, int idMovBanc, int idMovCart, double nrQuantidade, double nrValorUnit, LocalDate dtCriadoEm, LocalDate dtAtualizadoEm, int idAtivo) {
-        this.idTransacao = idTransacao;
-        this.idMovBanc = idMovBanc;
-        this.idMovCart = idMovCart;
-        this.nrQuantidade = nrQuantidade;
-        this.nrValorUnit = nrValorUnit;
+    private Ativo ativo;
+
+    public Investimento(int idInvest, double ValorInvest, LocalDate dtCriadoEm, String tipoInvest, Ativo ativo) {
+        this.idInvest = idInvest;
+        this.valorInvest = ValorInvest;
         this.dtCriadoEm = dtCriadoEm;
-        this.dtAtualizadoEm = dtAtualizadoEm;
-        this.idAtivo = idAtivo;
+        this.tipoInvest = tipoInvest;
+        this.ativo = ativo;
     }
 
     public Investimento() {}
 
-    public int getIdTransacao() {
-        return idTransacao;
+    public int getIdInvest() {
+        return idInvest;
     }
 
-    public void setIdTransacao(int idTransacao) {
-        this.idTransacao = idTransacao;
+    public void setIdInvest(int idInvest) {
+        this.idInvest = idInvest;
     }
 
-    public int getIdMovBanc() {
-        return idMovBanc;
+    public double getValorInvest() {
+        return valorInvest;
     }
 
-    public void setIdMovBanc(int idMovBanc) {
-        this.idMovBanc = idMovBanc;
-    }
-
-    public int getIdMovCart() {
-        return idMovCart;
-    }
-
-    public void setIdMovCart(int idMovCart) {
-        this.idMovCart = idMovCart;
-    }
-
-    public double getNrQuantidade() {
-        return nrQuantidade;
-    }
-
-    public void setNrQuantidade(double nrQuantidade) {
-        this.nrQuantidade = nrQuantidade;
-    }
-
-    public double getNrValorUnit() {
-        return nrValorUnit;
-    }
-
-    public void setNrValorUnit(double nrValorUnit) {
-        this.nrValorUnit = nrValorUnit;
+    public void setValorInvest(double valorInvest) {
+        this.valorInvest = valorInvest;
     }
 
     public LocalDate getDtCriadoEm() {
@@ -82,11 +54,27 @@ public class Investimento {
         this.dtAtualizadoEm = dtAtualizadoEm;
     }
 
-    public int getIdAtivo() {
-        return idAtivo;
+    public Ativo getAtivo() {
+        return ativo;
     }
 
-    public void setIdAtivo(int idAtivo) {
-        this.idAtivo = idAtivo;
+    public void setAtivo(Ativo ativo) {
+        this.ativo = ativo;
+    }
+
+    public String getNomeAtivo() {
+        return ativo.getNomeAtivo();
+    }
+
+    public int getIdAtivo() {
+        return ativo.getIdAtivo();
+    }
+
+    public String getTipoInvest() {
+        return tipoInvest;
+    }
+
+    public void setTipoInvest(String tipoInvest) {
+        this.tipoInvest = tipoInvest;
     }
 }
