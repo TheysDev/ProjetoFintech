@@ -73,10 +73,9 @@ public class OracleInvestimentoDao implements InvestimentoDao {
 
             AtivoDao ativoDao = DaoFactory.getAtivoDao();
             Ativo ativo = ativoDao.buscar(idAtivo);
-
+            System.out.println("Investimento: " + tipoInvest + " - Ativo: " + ativo.getNomeAtivo());
             Investimento investimento = new Investimento(id, valorInvest, dtCriadoEm, tipoInvest, ativo );
             lista.add(investimento);
-
         }
         return lista;
     }

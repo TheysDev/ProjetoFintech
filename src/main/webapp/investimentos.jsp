@@ -93,9 +93,10 @@
                         </tr>
                         </thead>
                         <tbody id="tabela-despesas">
+                        <c:forEach items="${invest}" var="invest">
                         <tr>
                             <td>${invest.tipoInvest}</td>
-                            <td>${ativo.nomeAtivo}</td>
+                            <td>${invest.ativo.nomeAtivo}</td>
                             <td class="text-center">
                                 <fmt:parseDate
                                         value="${invest.dtCriadoEm}" pattern="yyyy-MM-dd" var="dataFmt"/>
@@ -112,13 +113,9 @@
                                 </td>
                             </c:if>
                         </tr>
+                        </c:forEach>
                         </tbody>
                     </table>
-                </div>
-
-                <div class="d-flex mt-auto gap-4">
-                    <button type="submit" class="btn btn-limpar fs-4 p-0"><i class="bi bi-arrow-left"></i></button>
-                    <button type="submit" class="btn btn-criar fs-4 p-0"><i class="bi bi-arrow-right"></i></button>
                 </div>
             </div>
         </div>
