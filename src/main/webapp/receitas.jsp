@@ -126,7 +126,7 @@
                                 <input type="date" name="data" class="form-control input-custom" id="data">
                             </div>
                             <div class="d-flex flex-column mt-2 mb-4">
-                                <h6>Alocação</h6>
+                                <h6 class="negrito">Alocação:</h6>
                                 <div class="btn-group">
                                     <select name="alocacao" id="id-alocacao" class="form-control">
                                         <option value="0">Selecione</option>
@@ -135,7 +135,7 @@
                                         </c:forEach>
                                     </select>
                                 </div>
-                                <div class="d-flex flex-column mt-1 mb-4">
+                                <div class="d-flex flex-column mt-4 mb-4">
                                     <h6 class="negrito">Conta Bancária:</h6>
                                     <select name="conta" id="id-conta" class="form-control">
                                         <option value="0">Selecione</option>
