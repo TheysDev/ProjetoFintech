@@ -90,7 +90,12 @@ public class MovimentacaoServlet extends HttpServlet {
                 } catch (SQLException | EntidadeNaoEcontradaException e) {
                     throw new RuntimeException(e);
                 }
-
+            case "dashboard":
+                try {
+                    dadosDashboard(req, resp);
+                } catch (SQLException | EntidadeNaoEcontradaException e) {
+                    throw new RuntimeException(e);
+                }
         }
     }
 
@@ -226,12 +231,6 @@ public class MovimentacaoServlet extends HttpServlet {
                     throw new RuntimeException(e);
                 }
                 break;
-            case "dashboard":
-                try {
-                    dadosDashboard(req, resp);
-                } catch (SQLException | EntidadeNaoEcontradaException e) {
-                    throw new RuntimeException(e);
-                }
         }
     }
 

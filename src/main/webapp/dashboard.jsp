@@ -1,3 +1,5 @@
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 
@@ -9,7 +11,7 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="resources/css/despesas.css">
-  <link rel="stylesheet" href="./css/estilos.css">
+  <link rel="stylesheet" href="resources/css/estilos.css">
   <!-- Importando a biblioteca Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -116,7 +118,7 @@
           <table class="table table-hover text-center">
             <thead>
             <tr>
-              <th scope="col">Nome</th>
+              <th scope="col">Alocação</th>
               <th scope="col">Data</th>
               <th scope="col">Conta B.</th>
               <th scope="col">Valor</th>
@@ -124,13 +126,20 @@
             </tr>
             </thead>
             <tbody id="tabela-despesas">
-            <!-- conteúdo gerado pelo JS -->
+            <c:forEach items="${movimentacao}" var="m">
+              <tr>
+                <td class="text-primary">${m.getDescricaoAlocacao()}</td>
+                <td class="text-center">
+                  <fmt:parseDate
+                          value="${m.dataMovimentacao}" pattern="yyyy-MM-dd" var="dataFmt"/>
+                  <fmt:formatDate value="${dataFmt}" pattern="dd/MM/yyyy"/>
+                </td>
+                <td>${m.getNumeroConta()}</td>
+                  <td> R$ <fmt:formatNumber  value="${m.valorMovimentacao}"/></td>
+              </tr>
+            </c:forEach>
             </tbody>
           </table>
-        </div>
-        <div class="d-flex mt-auto gap-4">
-          <button type="submit" class="btn btn-limpar fs-4 p-0"><i class="bi bi-arrow-left"></i></button>
-          <button type="submit" class="btn btn-criar fs-4 p-0"><i class="bi bi-arrow-right"></i></button>
         </div>
       </div>
     </div>
@@ -140,8 +149,8 @@
 <!-- Scripts do Bootstrap -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<script src="./js/desepesas.js" type="module"></script>
-<script src="./js/chart.js"></script>
+
+<script src="resources/js/chart.js"></script>
 </body>
 
 </html>
