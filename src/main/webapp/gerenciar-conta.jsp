@@ -15,10 +15,86 @@
 
 <body>
 
-<%@include file="menu.jsp" %>
+<nav class="navbar bg-body-tertiary fixed-top d-block d-xl-none position-fixed top-0 borda-bottom">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <h4>Gerenciando Conta</h4>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+                aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
+             aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header">
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <form class="d-flex flex-column aling-items-center  offcanvas-body" role="search">
+                <div>
+                    <div class="d-flex justify-content-center">
+                        <img src="resources/img/cash-controller-logo.png" alt="" class="logo-sidebar">
+                    </div>
+                    <li class="lista-sem-pontos">
+                        <a href="dashboard.jsp" class="link-custom">
+                            <h4>Dashboard</h4>
+                        </a>
+                    </li>
+                    <li class="lista-sem-pontos mt-1">
+                        <a href="movimentacao?acao=form-receitas" class="link-custom">
+                            <h4>Receitas</h4>
+                        </a>
+                    </li>
+                    <li class="lista-sem-pontos mt-1">
+                        <a href="movimentacao?acao=form-despesas" class="link-custom">
+                            <h4>Despesas</h4>
+                        </a>
+                    </li>
+                    <li class="lista-sem-pontos mt-1">
+                        <a href="investimentos.jsp" class="link-custom">
+                            <h4>Investimentos</h4>
+                        </a>
+                    </li>
+                    <li class="lista-sem-pontos mt-1">
+                        <a href="#" class="link-custom ativado">
+                            <h4>Gerenciar Conta</h4>
+                        </a>
+                    </li>
+                    <li class="lista-sem-pontos mt-1">
+                        <a href="login.jsp" class="link-sair">
+                            <h4>Sair</h4>
+                        </a>
+                    </li>
+                </div>
+            </form>
+        </div>
+    </div>
+    </div>
+</nav>
 
-<%@include file="menuOff.jsp" %>
-
+<div class="offcanvas offcanvas-start show container card d-flex flex-column  align-items-center col-3 position-fixed start-0 sidebar-custom d-none d-xl-block "
+     tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel" data-bs-backdrop="false" data-bs-scroll="true">
+    <div class="d-flex justify-content-center">
+        <img src="resources/img/cash-controller-logo.png" alt="" class="logo-sidebar mt-4">
+    </div>
+    <li class="lista-sem-pontos mt-4">
+        <a href="dashboard.jsp" class="fw-bold link-custom fs-5">Dashboard</a>
+    </li>
+    <li class="lista-sem-pontos mt-1">
+        <a href="movimentacao?acao=form-receitas" class="fw-bold link-custom fs-5">Receitas</a>
+    </li>
+    <li class="lista-sem-pontos mt-1">
+        <a href="movimentacao?acao=form-despesas" class="fw-bold link-custom fs-5">Despesas</a>
+    </li>
+    <li class="lista-sem-pontos mt-1">
+        <a href="investimentos.jsp" class="fw-bold link-custom fs-5">Investimentos</a>
+    </li>
+    <li class="lista-sem-pontos mt-1">
+        <a href="#" class="fw-bold link-custom ativado fs-5">Gerenciar Conta</a>
+    </li>
+    <li class="lista-sem-pontos mt-1">
+        <a href="login.jsp" class="fw-bold link-sair fs-5 ">Sair</a>
+    </li>
+</div>
 
 <div class="d-flex flex-column flex-lg-row flex-xl-row espaco-top ">
 
@@ -49,7 +125,7 @@
                                 <input type="text" name="numero" class="form-control input-custom" id="numBanco"
                                        placeholder="260">
                             </div>
-                            <div class="d-flex gap-2">
+                            <div class="d-flex gap-2 mt-3">
                                 <button type="submit" class="btn btn-sm btn-outline-primary btn-cadastro">Cadastrar
                                 </button>
                                 <button type="submit" class="btn btn-sm btn-outline-secondary btn-cadastro">Cancelar
@@ -90,11 +166,11 @@
                                 <label for="numBancoRemover" class="form-label">
                                     <h6 class="negrito">Número do Banco:</h6>
                                 </label>
-                                <input type="text" name="numeroBanco" class="form-control input-custom"
+                                <input type="text" name="numeroBancoRemover" class="form-control input-custom"
                                        placeholder="260">
                             </div>
                             <input type="hidden" name="status" value="Ativo">
-                            <div class="d-flex gap-2">
+                            <div class="d-flex gap-2 mt-3">
                                 <button type="submit" class="btn btn-sm btn-outline-primary btn-cadastro">Cadastrar
                                 </button>
                                 <button type="submit" class="btn btn-sm btn-outline-secondary btn-cadastro">Cancelar
@@ -117,7 +193,7 @@
                                 <input type="text" name="numeroBanco" class="form-control input-custom"
                                        id="numBancoRemover" placeholder="260">
                             </div>
-                            <div class="d-flex gap-2">
+                            <div class="d-flex gap-2 mt-3">
                                 <button type="submit" class="btn btn-sm btn-outline-danger btn-cadastro">Remover
                                 </button>
                                 <button type="submit" class="btn btn-sm btn-outline-secondary btn-cadastro">Cancelar
@@ -133,17 +209,18 @@
                     <div class="mb-4">
                         <div class=" mt-3 mb-4">
                             <div class="btn-group d-flex align-items-center">
-                                <h6 class="negrito me-2">Conta:</h6>
-                                <label>
-                                    <select name="idContaDesativar" class="form-control">
-                                        <option value="" disabled selected>Selecione uma opção...</option>
-                                        <c:forEach items="${conta}" var="c">
-                                            <c:if test="${c.status == 'Ativo'}">
-                                                <option value="${c.idConta}">${c.numeroConta} - ${c.nomeBanco}</option>
-                                            </c:if>
-                                        </c:forEach>
-                                    </select>
+
+                                <label for="desativarConta" class="form-label">
+                                    <h6 class="negrito me-2">Conta:</h6>
                                 </label>
+                                <select name="idContaDesativar" class="form-control" id="desativarConta">
+                                    <option value="" disabled selected>Selecione uma opção...</option>
+                                    <c:forEach items="${conta}" var="c">
+                                        <c:if test="${c.status == 'Ativo'}">
+                                            <option value="${c.idConta}">${c.numeroConta} - ${c.nomeBanco}</option>
+                                        </c:if>
+                                    </c:forEach>
+                                </select>
                             </div>
                         </div>
                         <div class="d-flex gap-2">
@@ -154,24 +231,27 @@
                     </div>
                 </form>
                 <div class="text-center mt-5">
-                    <h5 class="text-danger">Ativar Conta Bancária</h5>
+                    <h5 class="text-success">Ativar Conta Bancária</h5>
                 </div>
                 <form action="contaBancaria?acao=ativar" method="post">
                     <div class="mb-4">
                         <div class=" mt-3 mb-4">
                             <div class="btn-group d-flex align-items-center">
-                                <h6 class="negrito me-2">Conta:</h6>
-                                <label>
-                                    <select name="idContaAtivar" class="form-control">
-                                        <option value="" disabled selected>Selecione uma opção...</option>
-                                        <c:forEach items="${conta}" var="conta">
-                                            <c:if test="${conta.status == 'Inativa'}">
-                                                <option value="${conta.idConta}">${conta.numeroConta}
-                                                    - ${conta.nomeBanco}</option>
-                                            </c:if>
-                                        </c:forEach>
-                                    </select>
+
+                                <label for="ativarConta" class="form-label">
+                                    <h6 class="negrito me-2">Conta:</h6>
                                 </label>
+
+                                <select name="idContaAtivar" class="form-control" id="ativarConta">
+                                    <option value="" disabled selected>Selecione uma opção...</option>
+                                    <c:forEach items="${conta}" var="conta">
+                                        <c:if test="${conta.status == 'Inativa'}">
+                                            <option value="${conta.idConta}">${conta.numeroConta}
+                                                    - ${conta.nomeBanco}</option>
+                                        </c:if>
+                                    </c:forEach>
+                                </select>
+
                             </div>
                         </div>
                         <div class="d-flex gap-2">
@@ -228,13 +308,13 @@
                                 </label>
                                 <input type="text" class="form-control input-custom" name="descricao" id="nomeAlocação"
                                        placeholder="Aluguel">
-                                <select name="tipoAlocacao" class="form-control">
+                                <select name="tipoAlocacao" class="form-control mt-3">
                                     <option value="" disabled selected>Selecione uma opção...</option>
                                     <option value="DESPESA">Despesa</option>
                                     <option value="RECEITA">Receita</option>
                                 </select>
                             </div>
-                            <div class="d-flex gap-2">
+                            <div class="d-flex gap-2 mt-3">
                                 <button type="submit" class="btn btn-sm btn-outline-secondary btn-cadastro">Cadastrar
                                 </button>
                                 <a href="gerenciador" class="btn btn-sm btn-outline-primary btn-cadastro">Cancelar</a>
@@ -252,7 +332,9 @@
                             <div class="d-flex flex-column mt-1 mb-4">
                                 <div class="btn-group d-flex align-items-center">
 
-                                    <h6 class="negrito me-2">Ativo:</h6>
+                                    <label for="opcoes" class="form-label">
+                                        <h6 class="negrito me-2">Ativo:</h6>
+                                    </label>
 
                                     <form action="">
                                         <select id="opcoes" name="opcoes" class="form-control">
@@ -261,7 +343,7 @@
                                     </form>
                                 </div>
                             </div>
-                            <div class="mt-3">
+                            <div>
                                 <label for="editarAtivo" class="form-label">
                                     <h6 class="negrito">Nome:</h6>
                                 </label>
@@ -293,15 +375,18 @@
                     <div class="mb-4">
                         <div class="d-flex flex-column mt-1 mb-4">
                             <div class="btn-group d-flex align-items-center">
-                                <h6 class="negrito me-2">Alocação:</h6>
-                                <label>
-                                    <select name="idAlocacao" class="form-control">
-                                        <option value="" disabled selected>Selecione uma opção...</option>
-                                        <c:forEach items="${alocacao}" var="a">
-                                            <option value="${a.idAlocacao}">${a.descricaoAlocacao}</option>
-                                        </c:forEach>
-                                    </select>
+
+                                <label for="removerAlocacao" class="form-label">
+                                    <h6 class="negrito me-2">Alocação:</h6>
                                 </label>
+
+                                <select name="idAlocacao" class="form-control" id="removerAlocacao">
+                                    <option value="" disabled selected>Selecione uma opção...</option>
+                                    <c:forEach items="${alocacao}" var="a">
+                                        <option value="${a.idAlocacao}">${a.descricaoAlocacao}</option>
+                                    </c:forEach>
+                                </select>
+
                             </div>
                         </div>
                         <div class="d-flex gap-2">
