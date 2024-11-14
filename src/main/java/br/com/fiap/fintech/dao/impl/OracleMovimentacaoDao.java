@@ -28,6 +28,8 @@ public class OracleMovimentacaoDao implements MovimentacaoDao {
     @Override
     public void inserir(Movimentacao movimentacao) throws SQLException {
 
+        System.out.println("Inserindo Movimentacao");
+
         stm = conexao.prepareStatement("INSERT INTO T_FIN_MOVIMENTACAO (id_movimentacao, id_conta, id_alocacao, nr_valor_total, dt_movimentacao, dt_criada_em, ds_tipo_mov)" +
                 "VALUES (SQ_FIN_MOVIMENTACAO.NEXTVAL, ?, ?, ?, ?, ?, ?)");
 
