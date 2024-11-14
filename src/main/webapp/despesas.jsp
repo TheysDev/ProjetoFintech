@@ -122,7 +122,7 @@
                                 <label for="dataDespesa" class="form-label">
                                     <h6>Data:</h6>
                                 </label>
-                                <input type="date" name="dataDespesa" class="form-control input-custom" id="dataDespesa">
+                                <input type="date" name="data" class="form-control input-custom" id="dataDespesa">
                             </div>
                             <div class="d-flex flex-column mt-2 mb-4">
                                 <h6>Alocação</h6>

@@ -160,7 +160,7 @@ public class MovimentacaoServlet extends HttpServlet {
     private Movimentacao dadosMov(HttpServletRequest req) throws SQLException, EntidadeNaoEcontradaException {
 
         String valor = req.getParameter("valor").replace(',', '.');
-        String data = req.getParameter("dataDespesa");
+        String data = req.getParameter("data");
         String idAlocacao = req.getParameter("alocacao");
         String idConta = req.getParameter("conta");
         String tipoMov = req.getParameter("tipoMov");
