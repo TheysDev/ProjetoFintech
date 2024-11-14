@@ -7,7 +7,9 @@
 </head>
 <body>
   <h1>BEM VINDO SEU LINDO</h1>
-
+  <a href="login.jsp" class="link-custom ativado">
+      <h4>Login</h4>
+  </a>
   <a href="movimentacao?acao=form-despesas" class="link-custom ativado">
       <h4>Despesas</h4>
   </a>
