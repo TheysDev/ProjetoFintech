@@ -51,7 +51,7 @@
             </a>
           </li>
           <li class="lista-sem-pontos mt-1">
-            <a href="investimento?acao=form-investimento" class="link-custom">
+            <a href="investimentos.jsp" class="link-custom">
               <h4>Investimentos</h4>
             </a>
           </li>
@@ -86,7 +86,7 @@
     <a href="movimentacao?acao=form-despesas" class="fw-bold link-custom fs-5">Despesas</a>
   </li>
   <li class="lista-sem-pontos mt-1">
-    <a href="investimento?acao=form-investimento" class="fw-bold link-custom fs-5">Investimentos</a>
+    <a href="investimentos.jsp" class="fw-bold link-custom fs-5">Investimentos</a>
   </li>
   <li class="lista-sem-pontos mt-1">
     <a href="gerenciador" class="fw-bold link-custom fs-5">Gerenciar Conta</a>
@@ -128,6 +128,10 @@
             </tbody>
           </table>
         </div>
+        <div class="d-flex mt-auto gap-4">
+          <button type="submit" class="btn btn-limpar fs-4 p-0"><i class="bi bi-arrow-left"></i></button>
+          <button type="submit" class="btn btn-criar fs-4 p-0"><i class="bi bi-arrow-right"></i></button>
+        </div>
       </div>
     </div>
   </div>
@@ -137,7 +141,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="./js/desepesas.js" type="module"></script>
-<script src="resources/js/chart.js"></script>
+<script src="./js/chart.js"></script>
 </body>
 
 </html>

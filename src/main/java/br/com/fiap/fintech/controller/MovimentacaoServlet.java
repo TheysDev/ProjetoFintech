@@ -20,6 +20,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/movimentacao")
@@ -225,7 +226,35 @@ public class MovimentacaoServlet extends HttpServlet {
                     throw new RuntimeException(e);
                 }
                 break;
+            case "dashboard":
+                try {
+                    dadosDashboard(req, resp);
+                } catch (SQLException | EntidadeNaoEcontradaException e) {
+                    throw new RuntimeException(e);
+                }
         }
+    }
+
+    private void dadosDashboard(HttpServletRequest req, HttpServletResponse resp) throws SQLException, EntidadeNaoEcontradaException, ServletException, IOException {
+
+        dadosUser(req, resp);
+
+        List<Movimentacao> listarReceitas = movDao.listarReceitas();
+        List<Movimentacao> listarDespesas = movDao.listarDespesas();
+        List<Movimentacao> listaCompleta = new ArrayList<>(listarDespesas);
+        listaCompleta.addAll(listarReceitas);
+        List<Alocacao> listaAloc = alocDao.listarAlocReceita();
+        req.setAttribute("alocacao", listaAloc);
+        req.setAttribute("movimentacao",listaCompleta);
+
+        try {
+            req.getRequestDispatcher("dashboard.jsp").forward(req, resp);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Erro durante o forward: " + e.getMessage());
+        }
+
     }
 
     private void listarDadosReceitas(HttpServletRequest req, HttpServletResponse resp) throws SQLException, EntidadeNaoEcontradaException {

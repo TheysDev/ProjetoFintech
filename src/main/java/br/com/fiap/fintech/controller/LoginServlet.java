@@ -33,7 +33,7 @@ public class LoginServlet extends HttpServlet {
             if(dao.validarLogin(usuario)){
                 HttpSession session = req.getSession();
                 session.setAttribute("usuario", usuario);
-                req.getRequestDispatcher("/dashboard.jsp").forward(req, resp);
+                req.getRequestDispatcher("movimentacao?acao=dashboard").forward(req, resp);
             } else {
                 req.setAttribute("erro", "Usuário ou senha incorretos");
                 req.getRequestDispatcher("/login.jsp").forward(req, resp);
