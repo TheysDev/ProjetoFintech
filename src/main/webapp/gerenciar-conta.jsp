@@ -50,7 +50,7 @@
                         </a>
                     </li>
                     <li class="lista-sem-pontos mt-1">
-                        <a href="investimentos.jsp" class="link-custom">
+                        <a href="investimento?acao=form-investimento" class="link-custom">
                             <h4>Investimentos</h4>
                         </a>
                     </li>
@@ -86,7 +86,7 @@
         <a href="movimentacao?acao=form-despesas" class="fw-bold link-custom fs-5">Despesas</a>
     </li>
     <li class="lista-sem-pontos mt-1">
-        <a href="investimentos.jsp" class="fw-bold link-custom fs-5">Investimentos</a>
+        <a href="investimento?acao=form-investimento" class="fw-bold link-custom fs-5">Investimentos</a>
     </li>
     <li class="lista-sem-pontos mt-1">
         <a href="#" class="fw-bold link-custom ativado fs-5">Gerenciar Conta</a>
@@ -127,8 +127,6 @@
                             </div>
                             <div class="d-flex gap-2 mt-3">
                                 <button type="submit" class="btn btn-sm btn-outline-primary btn-cadastro">Cadastrar
-                                </button>
-                                <button type="submit" class="btn btn-sm btn-outline-secondary btn-cadastro">Cancelar
                                 </button>
                             </div>
                         </form>
@@ -173,8 +171,6 @@
                             <div class="d-flex gap-2 mt-3">
                                 <button type="submit" class="btn btn-sm btn-outline-primary btn-cadastro">Cadastrar
                                 </button>
-                                <button type="submit" class="btn btn-sm btn-outline-secondary btn-cadastro">Cancelar
-                                </button>
                             </div>
                         </form>
                     </div>
@@ -195,8 +191,6 @@
                             </div>
                             <div class="d-flex gap-2 mt-3">
                                 <button type="submit" class="btn btn-sm btn-outline-danger btn-cadastro">Remover
-                                </button>
-                                <button type="submit" class="btn btn-sm btn-outline-secondary btn-cadastro">Cancelar
                                 </button>
                             </div>
                         </form>
@@ -225,8 +219,6 @@
                         </div>
                         <div class="d-flex gap-2">
                             <button type="submit" class="btn btn-sm btn-outline-danger btn-cadastro">Desativar</button>
-                            <button type="submit" class="btn btn-sm btn-outline-secondary btn-cadastro">Cancelar
-                            </button>
                         </div>
                     </div>
                 </form>
@@ -256,8 +248,6 @@
                         </div>
                         <div class="d-flex gap-2">
                             <button type="submit" class="btn btn-sm btn-outline-danger btn-cadastro">Ativar</button>
-                            <button type="submit" class="btn btn-sm btn-outline-secondary btn-cadastro">Cancelar
-                            </button>
                         </div>
                     </div>
                 </form>
@@ -289,9 +279,6 @@
                             <button type="submit"
                                     class="btn btn-sm btn-outline-primary btn-cadastro">Cadastrar
                             </button>
-                            <button type="submit"
-                                    class="btn btn-sm btn-outline-secondary btn-cadastro">Cancelar
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -317,7 +304,6 @@
                             <div class="d-flex gap-2 mt-3">
                                 <button type="submit" class="btn btn-sm btn-outline-secondary btn-cadastro">Cadastrar
                                 </button>
-                                <a href="gerenciador" class="btn btn-sm btn-outline-primary btn-cadastro">Cancelar</a>
                             </div>
                         </form>
                     </div>
@@ -361,9 +347,6 @@
                             <button type="submit"
                                     class="btn btn-sm btn-outline-success btn-cadastro">Confirmar
                             </button>
-                            <button type="submit"
-                                    class="btn btn-sm btn-outline-secondary btn-cadastro">Cancelar
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -391,8 +374,6 @@
                         </div>
                         <div class="d-flex gap-2">
                             <button type="submit" class="btn btn-sm btn-outline-danger btn-cadastro">Remover</button>
-                            <button type="submit" class="btn btn-sm btn-outline-secondary btn-cadastro">Cancelar
-                            </button>
                         </div>
                     </div>
                 </form>
@@ -450,9 +431,6 @@
                         <div class="d-flex gap-2">
                             <button type="submit"
                                     class="btn btn-sm btn-outline-success btn-cadastro">Confirmar
-                            </button>
-                            <button type="submit"
-                                    class="btn btn-sm btn-outline-secondary btn-cadastro">Cancelar
                             </button>
                         </div>
                     </div>

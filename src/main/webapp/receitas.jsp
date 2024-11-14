@@ -52,7 +52,7 @@
                         </a>
                     </li>
                     <li class="lista-sem-pontos mt-1">
-                        <a href="investimentos.jsp" class="link-custom">
+                        <a href="investimento?acao=form-investimento" class="link-custom">
                             <h4>Investimentos</h4>
                         </a>
                     </li>
@@ -88,7 +88,7 @@
         <a href="movimentacao?acao=form-despesas" class="fw-bold link-custom fs-5">Despesas</a>
     </li>
     <li class="lista-sem-pontos mt-1">
-        <a href="investimentos.jsp" class="fw-bold link-custom fs-5">Investimentos</a>
+        <a href="investimento?acao=form-investimento" class="fw-bold link-custom fs-5">Investimentos</a>
     </li>
     <li class="lista-sem-pontos mt-1">
         <a href="gerenciador" class="fw-bold link-custom fs-5">Gerenciar Conta</a>

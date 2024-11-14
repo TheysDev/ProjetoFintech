@@ -116,8 +116,6 @@ body {
 
 .btn-cadastro,
 .btn-limpar {
-    background-color: #dadada;
-    color: black;
     border: none;
     transition: all 0.3s;
 }
