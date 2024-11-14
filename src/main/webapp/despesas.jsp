@@ -190,7 +190,7 @@
                                     </form>
                                 </td>
                                 <td>
-                                    <form action="movimentacao?acao=excluir" method="post">
+                                    <form action="movimentacao?acao=excluir-despesa" method="post">
                                         <input type="hidden" name="id" value="${d.idMovimentacao}" class="btn btn-danger">
                                         <input type="submit" name="excluir" value="Excluir" class="btn btn-danger">
                                     </form>

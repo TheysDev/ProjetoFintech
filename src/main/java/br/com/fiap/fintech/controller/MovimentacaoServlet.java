@@ -76,16 +76,35 @@ public class MovimentacaoServlet extends HttpServlet {
                 }
                 break;
 
-            case "excluir":
+            case "excluir-despesa":
                 try {
-                    excluirMov(req, resp);
+                    excluirDespesas(req, resp);
                 } catch (SQLException | EntidadeNaoEcontradaException e) {
                     throw new RuntimeException(e);
                 }
+                break;
+            case "excluir-receita":
+                try {
+                    excluirReceita(req, resp);
+                } catch (SQLException | EntidadeNaoEcontradaException e) {
+                    throw new RuntimeException(e);
+                }
+
         }
     }
 
-    private void excluirMov(HttpServletRequest req, HttpServletResponse resp) throws SQLException, EntidadeNaoEcontradaException, ServletException, IOException {
+    private void excluirReceita(HttpServletRequest req, HttpServletResponse resp) throws SQLException, EntidadeNaoEcontradaException, ServletException, IOException {
+
+        int id = Integer.parseInt(req.getParameter("id"));
+
+        Movimentacao movimentacao = movDao.buscarPorId(id);
+
+        movDao.excluir(movimentacao);
+
+        listarDadosReceitas(req, resp);
+    }
+
+    private void excluirDespesas(HttpServletRequest req, HttpServletResponse resp) throws SQLException, EntidadeNaoEcontradaException, ServletException, IOException {
 
         int id = Integer.parseInt(req.getParameter("id"));
 
